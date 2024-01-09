@@ -1,0 +1,11 @@
+npx sequelize-cli model:generate --name User --attributes username:string,email:string,password:string,refreshToken:string
+npx sequelize-cli model:generate --name Country --attributes name:string
+npx sequelize-cli model:generate --name City --attributes name:string,countryId:integer
+npx sequelize-cli model:generate --name Cuisine --attributes name:string
+npx sequelize-cli model:generate --name Timetable --attributes openTime:time,closeTime:time
+npx sequelize-cli model:generate --name Category --attributes name:string
+npx sequelize-cli model:generate --name Restaraunt --attributes name:string,description:text,address:string,images:array,cuisineId:integer,cityId:integer,timetableId:integer
+npx sequelize-cli model:generate --name Dishes --attributes name:string,price:integer,categoryId:integer,restId:integer
+npx sequelize-cli model:generate --name Reservation --attributes date:dateonly,guestsCount:integer,startTime:time,restId:integer,userId:integer
+npx sequelize-cli model:generate --name AvailableDateTime --attributes date:dateonly,startTime:time,endTime:time,guestsCount:integer,restId:integer
+npx sequelize-cli model:generate --name Review --attributes text:text,images:array,userId:integer,restId:integer
