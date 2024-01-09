@@ -1,0 +1,22 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f0ebe4;
+}
+
+.link_group,
+.profile_group {
+  display: flex;
+  gap: 55px;
+}
+
+.profile_group {
+  align-items: center;
+  gap: 30px;
+}
+
+.icon {
+  font-size: 25px;
+  padding-top: 20px;
+}
