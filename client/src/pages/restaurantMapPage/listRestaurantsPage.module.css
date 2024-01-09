@@ -1,0 +1,12 @@
+.RestaurantMapPage {
+  display: flex;
+}
+
+.RestaurantList {
+  flex: 1;
+}
+
+.MapContainer {
+  flex: 1;
+  border-radius: 10px;
+}
