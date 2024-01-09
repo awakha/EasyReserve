@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
   Review.init(
     {
       text: DataTypes.TEXT,
-      images: DataTypes.ARRAY,
+      images: DataTypes.ARRAY(DataTypes.TEXT),
       userId: DataTypes.INTEGER,
       restId: DataTypes.INTEGER,
     },
