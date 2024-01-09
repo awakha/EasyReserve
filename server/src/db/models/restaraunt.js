@@ -1,14 +1,14 @@
-'use strict';
-const { Model } = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Restaurant extends Model {
     static associate(models) {
-      this.hasMany(models.AvailableDateTime, { foreignKey: 'restId' });
-      this.belongsTo(models.City, { foreignKey: 'cityId' });
-      this.belongsTo(models.Cuisine, { foreignKey: 'cuisineId' });
-      this.hasMany(models.Dishes, { foreignKey: 'restId' });
-      this.hasMany(models.Review, { foreignKey: 'restId' });
-      this.belongsTo(models.Timetable, { foreignKey: 'timetableId' });
+      this.hasMany(models.AvailableDateTime, { foreignKey: "restId" });
+      this.belongsTo(models.City, { foreignKey: "cityId" });
+      this.belongsTo(models.Cuisine, { foreignKey: "cuisineId" });
+      this.hasMany(models.Dishes, { foreignKey: "restId" });
+      this.hasMany(models.Review, { foreignKey: "restId" });
+      this.belongsTo(models.Timetable, { foreignKey: "timetableId" });
     }
   }
   Restaurant.init(
@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Restaurant',
+      modelName: "Restaurant",
     }
   );
   return Restaurant;
