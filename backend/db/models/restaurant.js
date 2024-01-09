@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.Dishes, { foreignKey: 'restId' });
       this.hasMany(models.Review, { foreignKey: 'restId' });
       this.belongsTo(models.Timetable, { foreignKey: 'timetableId' });
+      this.hasMany(models.Reservation, { foreignKey: 'restId' });
     }
   }
   Restaurant.init(

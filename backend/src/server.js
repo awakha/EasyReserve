@@ -6,6 +6,7 @@ const cors = require('cors');
 
 // routes import
 const indexRouter = require('./routes/indexRouter');
+const adminRouter = require('./routes/adminRouter');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,6 +23,7 @@ app.use(
 
 // routes
 app.use('/api', indexRouter);
+app.use('/admin', adminRouter);
 
 app.listen(PORT, () => {
   console.log(`Server has started on PORT ${PORT}`);
