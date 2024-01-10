@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { Restaurant } = require("../../db/models");
 
+//Роутер на ПОКАЗ рестиков - РАБОТАЕТ
 router.get("/", async (req, res) => {
   try {
     const rests = await Restaurant.findAll({ raw: true, nest: true });
@@ -10,6 +11,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+//Роутер на добавление - РАБОТАЕТ
 router.post("/", async (req, res) => {
   try {
     const rest = await Restaurant.create(req.body);
@@ -20,18 +22,19 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
-  try {
-    const rest = await Restaurant.findByPk(req.params.id);
-    rest.isComplited = !rest.isComplited;
-    await rest.save();
-    res.json(rest);
-  } catch (err) {
-    res.status(401).json(err);
-  }
-});
+//Роутер на изменение 
+// router.put("/:id", async (req, res) => {
+//   try {
+//     const rest = await Restaurant.findByPk(req.params.id);
+//     rest.isComplited = !rest.isComplited;
+//     await rest.save();
+//     res.json(rest);
+//   } catch (err) {
+//     res.status(401).json(err);
+//   }
+// });
 
-//Роутер по карточкам товаров
+//Роутер по карточкам рестиков
 //   router.get('/car/:id', async (req, res) => {
 //     try {
 //       const todo = await Car.findByPk(req.params.id);
@@ -41,7 +44,7 @@ router.put("/:id", async (req, res) => {
 //     }
 //   });
 
-//Роутер на изменение//ДОДЕЛАТЬ!!!!!!!!!!!!!!!!!!!!!!!!!
+//Роутер на изменение - ВРОДЕ БЫ РАБОТАЕТ
 router.put("/", async (req, res) => {
   const { id, ...restData } = req.body;
   try {
@@ -60,6 +63,7 @@ router.put("/", async (req, res) => {
   }
 });
 
+//Роутер на удаление - РАБОТАЕТ
 router.delete("/", async (req, res) => {
   const { id } = req.query;
   try {
