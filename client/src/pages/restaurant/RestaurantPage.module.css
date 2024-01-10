@@ -1,0 +1,20 @@
+.cardRest {
+  display: flex;
+  align-items: flex-start;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.imageContainer {
+  width: 500px;
+  margin-right: 20px;
+  margin-bottom: 30px;
+}
+
+.descriptionContainer {
+  flex: 1;
+}

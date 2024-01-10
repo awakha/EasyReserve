@@ -7,6 +7,7 @@ const cors = require('cors');
 // routes import
 const indexRouter = require('./routes/indexRouter');
 const adminRouter = require('./routes/adminRouter');
+const mapRouter = require('./routes/mapRouter');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,14 +17,15 @@ app.use(express.json());
 app.use(morgan('dev'));
 app.use(
   cors({
-    origin: 'http://localhost:5173/',
-    credentials: 'include',
+    origin: 'http://localhost:5173',
+    credentials: true,
   })
 );
 
 // routes
 app.use('/api', indexRouter);
 app.use('/admin', adminRouter);
+app.use('/api', mapRouter);
 
 app.listen(PORT, () => {
   console.log(`Server has started on PORT ${PORT}`);
