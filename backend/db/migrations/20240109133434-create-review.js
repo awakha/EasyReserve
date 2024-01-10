@@ -18,6 +18,10 @@ module.exports = {
         type: Sequelize.ARRAY(Sequelize.TEXT),
         defaultValue: [],
       },
+      score: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
