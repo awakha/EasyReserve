@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+const Sequelize = require("sequelize");
 
 const {
   City,
@@ -6,34 +6,34 @@ const {
   Dishes,
   Review,
   Cuisine,
-} = require('../../db/models');
+} = require("../../db/models");
 
 exports.mainPage = async (req, res) => {
   try {
     const restData = await City.findAll({
-      attributes: ['id', 'name'],
+      attributes: ["id", "name"],
       include: [
         {
           model: Restaurant,
           attributes: [
-            'id',
-            'name',
-            'images',
+            "id",
+            "name",
+            "images",
             [
-              Sequelize.fn('AVG', Sequelize.col('Reviews.score')),
-              'averageScore',
+              Sequelize.fn("AVG", Sequelize.col("Reviews.score")),
+              "averageScore",
             ],
             [
-              Sequelize.fn('AVG', Sequelize.col('Dishes.price')),
-              'averagePrice',
+              Sequelize.fn("AVG", Sequelize.col("Dishes.price")),
+              "averagePrice",
             ],
           ],
           include: [
             { model: Dishes, attributes: [] },
             { model: Review, attributes: [] },
-            { model: Cuisine, attributes: ['name'] },
+            { model: Cuisine, attributes: ["name"] },
           ],
-          group: ['Restaurant.id', 'Cuisine.id'],
+          group: ["Restaurant.id", "Cuisine.id"],
         },
       ],
     });
