@@ -8,6 +8,7 @@ const cors = require('cors');
 const indexRouter = require('./routes/indexRouter');
 const adminRouter = require('./routes/adminRouter');
 const mapRouter = require('./routes/mapRouter');
+const restRouter = require('./routes/restRouter');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -26,6 +27,7 @@ app.use(
 app.use('/api', indexRouter);
 app.use('/admin', adminRouter);
 app.use('/api', mapRouter);
+app.use('/api/restaurants', restRouter);
 
 app.listen(PORT, () => {
   console.log(`Server has started on PORT ${PORT}`);
