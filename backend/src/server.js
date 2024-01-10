@@ -6,6 +6,7 @@ const cors = require('cors');
 
 // routes import
 const indexRouter = require('./routes/indexRouter');
+const adminRouter = require('./routes/adminRouter');
 const mapRouter = require('./routes/mapRouter');
 
 const app = express();
@@ -23,6 +24,7 @@ app.use(
 
 // routes
 app.use('/api', indexRouter);
+app.use('/admin', adminRouter);
 app.use('/api', mapRouter);
 
 app.listen(PORT, () => {
