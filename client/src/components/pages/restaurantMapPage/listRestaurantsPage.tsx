@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import style from "./listRestaurantsPage.module.css";
 import axios from "axios";
 import RestaurantPage from "../restaurant/RestaurantsPage";
-import MapComponent from "../../components/mapComponent/MapComponent";
+import MapComponent from "../../mapComponent/MapComponent";
+import { CustomLayout } from "../../Layout/CustomLayout";
+import SearchBar from "../../SearchBar/SearchBar";
 
 export default function RestaurantMapPage() {
   const [restaurant, setRestaurant] = useState([]);
@@ -19,13 +21,16 @@ export default function RestaurantMapPage() {
   }, []);
 
   return (
-    <div className={style.RestaurantMapPage}>
-      <div className={style.RestaurantList}>
-        <RestaurantPage restaurant={restaurant} />
+    <CustomLayout>
+      <SearchBar setRestaurant={setRestaurant}/>
+      <div className={style.RestaurantMapPage}>
+        <div className={style.RestaurantList}>
+          <RestaurantPage restaurant={restaurant} />
+        </div>
+        <div className={style.MapContainer}>
+          <MapComponent />
+        </div>
       </div>
-      <div className={style.MapContainer}>
-        <MapComponent />
-      </div>
-    </div>
+    </CustomLayout>
   );
 }
