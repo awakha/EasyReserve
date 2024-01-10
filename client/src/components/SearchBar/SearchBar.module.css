@@ -1,0 +1,26 @@
+@keyframes highlight {
+  0% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: yellow;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.SearchBar input.ant-select-search__field {
+  animation: 2s infinite highlight;
+}
+
+.SearchBar {
+    width: 100%; 
+    margin-top: 20px; 
+    margin-bottom: 20px;
+}
+
+Select:focus-within {
+    outline: none;
+    border-color: yellow;
+}

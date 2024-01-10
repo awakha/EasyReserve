@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import ListRestaurantsPage from "./pages/restaurantMapPage/listRestaurantsPage";
+import ListRestaurantsPage from "./components/pages/restaurantMapPage/listRestaurantsPage";
 import { Homepage } from "./components/pages/Homepage/Homepage";
 import AdminPage from "./components/pages/admin/AdminPage";
 
