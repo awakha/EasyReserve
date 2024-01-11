@@ -38,13 +38,14 @@ export default function CreateRestForm({ setRestaurant }) {
   };
 
   return (
-    <form className={styles.form}>
+    <form className={styles.createRestForm}>
       <input
         placeholder="Name"
         onChange={chengeHandler}
         type="text"
         name="name"
         value={data.name}
+        className={styles.inputField}
       />
 
       <input
@@ -53,6 +54,7 @@ export default function CreateRestForm({ setRestaurant }) {
         type="text"
         name="description"
         value={data.description}
+        className={styles.inputField}
       />
       <input
         placeholder="Address"
@@ -60,6 +62,7 @@ export default function CreateRestForm({ setRestaurant }) {
         type="text"
         name="address"
         value={data.address}
+        className={styles.inputField}
       />
       <input
         placeholder="Images"
@@ -67,6 +70,7 @@ export default function CreateRestForm({ setRestaurant }) {
         type="text"
         name="images"
         value={data.images}
+        className={styles.inputField}
       />
       <input
         placeholder="CuisineId"
@@ -74,6 +78,7 @@ export default function CreateRestForm({ setRestaurant }) {
         type="text"
         name="cuisineId"
         value={data.cuisineId}
+        className={styles.inputField}
       />
       <input
         placeholder="CityId"
@@ -81,6 +86,7 @@ export default function CreateRestForm({ setRestaurant }) {
         type="text"
         name="cityId"
         value={data.cityId}
+        className={styles.inputField}
       />
       <input
         placeholder="TimetableId"
@@ -88,8 +94,9 @@ export default function CreateRestForm({ setRestaurant }) {
         type="text"
         name="timetableId"
         value={data.timetableId}
+        className={styles.inputField}
       />
-      <button onClick={addHendler} type="button">
+      <button onClick={addHendler} type="button" className={styles.submitButton}>
         Tuch me, please
       </button>
     </form>

@@ -54,7 +54,7 @@ export default function AdminPage() {
   };
 
   return (
-    <CustomLayout>
+    <CustomLayout className={style.admin_page}>
       <button onClick={handleAddRestClick} className={style.btn__add__rest}>
         Add Rest
       </button>
