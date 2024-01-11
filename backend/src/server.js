@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 // routes import
 
@@ -25,6 +26,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(cookieParser());
 
 // routes
 
