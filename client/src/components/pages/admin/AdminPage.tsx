@@ -3,6 +3,7 @@ import style from "./AdminPage.module.css";
 import axios from "axios";
 import CreateRestForm from "./CreateRestForm";
 import UpdateRestForm from "./UpdateRestForm";
+import { CustomLayout } from "../../Layout/CustomLayout";
 
 export default function AdminPage() {
   const [restaurant, setRestaurant] = useState([]);
@@ -39,7 +40,6 @@ export default function AdminPage() {
     setSelectedRestaurant(null);
   };
 
-
   const deleteHandler = async (id) => {
     try {
       const response = await axios.delete(
@@ -54,10 +54,15 @@ export default function AdminPage() {
   };
 
   return (
-    <div>
-      <button onClick={handleAddRestClick}>Add Rest</button>
+    <CustomLayout>
+      <button onClick={handleAddRestClick} className={style.btn__add__rest}>
+        Add Rest
+      </button>
       {showCreateForm && (
-        <CreateRestForm setRestaurant={setRestaurant} onClose={handleCloseCreateForm} />
+        <CreateRestForm
+          setRestaurant={setRestaurant}
+          onClose={handleCloseCreateForm}
+        />
       )}
       {showUpdateForm && selectedRestaurant && (
         <UpdateRestForm
@@ -67,13 +72,22 @@ export default function AdminPage() {
         />
       )}
       {restaurant.map((rest) => (
-        <div key={rest.id}>
-          <p>{rest.name}</p>
-          <button onClick={() => handleUpdateRestClick(rest)}>Update</button>
-          <button onClick={() => deleteHandler(rest.id)}>Delete</button>
+        <div className={style.card__rest} key={rest.id}>
+          <p className={style.card__name}>{rest.name}</p>
+          <button
+            onClick={() => handleUpdateRestClick(rest)}
+            className={style.btn__update}
+          >
+            Update
+          </button>
+          <button
+            onClick={() => deleteHandler(rest.id)}
+            className={style.btn__delete}
+          >
+            Delete
+          </button>
         </div>
       ))}
-    </div>
+    </CustomLayout>
   );
 }
-
