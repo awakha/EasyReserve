@@ -53,7 +53,10 @@ export const ReviewsList: FC<IReviewsListProps> = ({ reviews }) => {
             />,
           ]}
         >
-          <List.Item.Meta title={<p>{review.User?.username}</p>} />
+          <List.Item.Meta
+            title={<p>{review.User?.username}</p>}
+            description={review.createdAt}
+          />
           {review.text}
         </List.Item>
       )}

@@ -15,6 +15,7 @@ import { useParams } from 'react-router-dom';
 import { Menu } from '../../UI/Menu/Menu';
 import { ReviewsList } from '../../UI/ReviewList/ReviewsList';
 import { ProgressBar } from '../../UI/ProgressBar/ProgressBar';
+import { DatePicker } from '../../UI/DatePicker/DatePicker';
 
 interface IRestPageProps {
   rest: IRestaurant;
@@ -141,7 +142,9 @@ export const RestPage: FC = () => {
             </div>
           </div>
         </div>
-        <div className={styles.calendar}></div>
+        <div className={styles.calendar}>
+          <DatePicker />
+        </div>
       </div>
     </CustomLayout>
   );
