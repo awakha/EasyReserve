@@ -47,8 +47,6 @@ export const RestPage: FC = () => {
     fetchRestData();
   }, []);
 
-  console.log(rest);
-
   return (
     <CustomLayout>
       <div className={styles.carousel}>

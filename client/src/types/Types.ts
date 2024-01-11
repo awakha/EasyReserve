@@ -112,3 +112,9 @@ export interface IAvailableDateTimes {
   updatedAt?: Date;
   Restaurant?: IRestaurant;
 }
+
+export type Schedule = {
+  date: string;
+  slots: string[];
+  seats: number;
+};

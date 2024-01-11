@@ -77,8 +77,6 @@ exports.getScheduleByRestId = async (req, res) => {
       group: ['Reservation.startTime', 'Reservation.id'],
     });
 
-    const data = [];
-
     reservations.forEach((res) => {
       schedule.forEach((el) => {
         if (
@@ -91,20 +89,19 @@ exports.getScheduleByRestId = async (req, res) => {
             Number(el.dataValues.guestsCount) -
             Number(res.dataValues.reservedSpots);
         }
-
-        data.push({
-          date: el.dataValues.date,
-          slots: timeSlots(
-            30,
-            parseInt(el.dataValues.startTime),
-            parseInt(el.dataValues.endTime)
-          ),
-          seats: el.dataValues.guestsCount,
-        });
       });
     });
 
-    console.log(timeSlots(30, 10, 12));
+    const data = schedule.map((el) => ({
+      date: el.dataValues.date,
+      slots: timeSlots(
+        30,
+        parseInt(el.dataValues.startTime),
+        parseInt(el.dataValues.endTime)
+      ),
+      seats: el.dataValues.guestsCount,
+    }));
+
     res.json(data);
   } catch (error) {
     console.log(error.message);
