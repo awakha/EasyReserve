@@ -24,6 +24,7 @@ import {
 import { useParams } from 'react-router-dom';
 import { Timeslots } from '../Timeslots/Timeslots';
 import { SeatsList } from '../GuestsPicker/SeatsList';
+import { Button } from 'antd';
 
 interface IDatePickerProps {
   schedule: IAvailableDateTimes[];
@@ -48,7 +49,7 @@ export const DatePicker: FC = () => {
     date: '',
     startTime: '',
     guestsCount: 0,
-    restId: id,
+    restId: Number(id),
     userId: 1,
   });
 
@@ -88,11 +89,17 @@ export const DatePicker: FC = () => {
     }
   };
 
+  const bookingHandler = async (): Promise<void> => {
+    const response = await axios.post(
+      `http://localhost:3000/api/booking/`,
+      data
+    );
+    console.log(response.data);
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
-
-  console.log(data);
 
   return (
     <div className="pt-16">
@@ -205,6 +212,9 @@ export const DatePicker: FC = () => {
                     return <SeatsList setData={setData} />;
                 }
               })()}
+              {data.guestsCount > 0 ? (
+                <Button onClick={bookingHandler}>Book</Button>
+              ) : null}
             </ol>
           </section>
         </div>

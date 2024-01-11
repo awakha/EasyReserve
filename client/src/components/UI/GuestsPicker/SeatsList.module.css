@@ -1,0 +1,25 @@
+.seats {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  flex-direction: column;
+  gap: 20px;
+}
+.btn_group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.button {
+  width: 60px;
+  margin-bottom: 10px;
+}
+
+.options {
+  align-self: center;
+}
+
+.options_bts {
+  width: 150px;
+}
