@@ -13,7 +13,13 @@ module.exports = {
           name: "italian",
         },
         {
-          name: "french",
+          name: "french", 
+        },
+        {
+          name: "vegetarian",
+        },
+        {
+          name: "international",
         },
       ],
       {}

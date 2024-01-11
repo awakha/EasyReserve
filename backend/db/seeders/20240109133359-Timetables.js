@@ -10,6 +10,10 @@ module.exports = {
           openTime: "08:00:00",
           closeTime: "22:00:00",
         },
+        {
+          openTime: "12:00:00",
+          closeTime: "00:00:00",
+        },
       ],
       {}
     );

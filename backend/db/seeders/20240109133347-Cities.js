@@ -11,11 +11,35 @@ module.exports = {
           countryId: 1,
         },
         {
+          name: 'Saint Petersburg',
+          countryId: 1,
+        },
+        {
+          name: 'Sochi',
+          countryId: 1,
+        },
+        {
           name: 'Milan',
           countryId: 2,
         },
         {
+          name: 'Roma',
+          countryId: 2,
+        },
+        {
+          name: 'Florence',
+          countryId: 2,
+        },
+        {
           name: 'Paris',
+          countryId: 3,
+        },
+        {
+          name: 'Strasbourg',
+          countryId: 3,
+        },
+        {
+          name: 'Perpignan',
           countryId: 3,
         },
       ],

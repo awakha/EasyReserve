@@ -15,6 +15,21 @@ module.exports = {
         {
           name: "pasta",
         },
+        {
+          name: "meat dishes",
+        },
+        {
+          name: "appetizer",
+        },
+        {
+          name: "fish and sea foods",
+        },
+        {
+          name: "garnishes",
+        },
+        {
+          name: "desserts",
+        },
       ],
       {}
     );
