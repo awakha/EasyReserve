@@ -105,7 +105,6 @@ export const RestPage: FC = () => {
 
             {rest?.Dishes ? <Menu menu={rest?.Dishes} /> : <span>No menu</span>}
 
-            {/* reviews here */}
             <div className={styles.reviews} id="reviews">
               <ProgressBar avgScore={rest?.avgScore} />
               {rest?.Reviews ? (

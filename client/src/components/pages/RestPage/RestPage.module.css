@@ -70,8 +70,3 @@ a {
   justify-content: space-between;
   gap: 50px;
 }
-
-.like_btn > .icon {
-  font-size: 25px;
-  margin: 10px;
-}
