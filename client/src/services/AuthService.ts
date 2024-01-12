@@ -11,7 +11,9 @@ export default class AuthService {
       email,
       password,
     });
-    localStorage.setItem("token", response.data.accessToken);
+    if (response) {
+      localStorage.setItem("token", response.data.accessToken);
+    }
 
     return response;
   }
