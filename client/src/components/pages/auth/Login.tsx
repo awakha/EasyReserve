@@ -1,23 +1,27 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, FC } from "react";
 import { CustomLayout } from "../../Layout/CustomLayout";
-import authAxiosInstance from "../../../http";
-import AuthService from "../../../services/AuthService";
 import { useDispatch } from "react-redux";
 import { loginAsync } from "../../../store/slices/authSlice";
+import { AppThunk } from "../../../store/store";
+import { useNavigate } from "react-router-dom";
 
-const Register = () => {
+export const Login: FC = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
-      await dispatch(loginAsync(email, password));
+      await (dispatch as (action: AppThunk) => Promise<void>)(
+        loginAsync(email, password)
+      );
+      navigate("/");
     } catch (error) {
       console.error("Ошибка входа:", error);
     }
   };
+
   return (
     <CustomLayout>
       <input
@@ -36,5 +40,3 @@ const Register = () => {
     </CustomLayout>
   );
 };
-
-export default Register;

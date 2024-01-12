@@ -12,6 +12,15 @@ import { loginAsync } from '../../../store/slices/authSlice';
 import { Redirect } from 'react-router-dom';
 import { Button } from 'antd';
 import { MobileOutlined } from '@ant-design/icons';
+import { FC, useEffect, useState } from 'react';
+import { CustomLayout } from '../../Layout/CustomLayout';
+import styles from './Homepage.module.css';
+import { Link } from 'react-router-dom';
+import { RestaurantItem } from '../../UI/RestaurantItem/RestaurantItem';
+import axios from 'axios';
+import { RecommendContainer } from '../../UI/RecommendContainer/RecommendContainer';
+import { useDispatch } from 'react-redux';
+
 export const Homepage: FC = () => {
   const [cities, setCities] = useState([]);
   const dispatch = useDispatch();

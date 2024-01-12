@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./rootReducer";
-import { IUser } from "../../types/Types";
 import { AppThunk } from "../store";
 import AuthService from "../../services/AuthService";
+import { IUser } from "../../types/Types";
 
 interface AuthState {
   user: IUser | null;
@@ -34,28 +34,20 @@ export const { setUser, logout } = authSlice.actions;
 export const loginAsync =
   (email: string, password: string): AppThunk =>
   async (dispatch) => {
-    try {
-      const response = await AuthService.login(email, password);
-      if (response) {
-        dispatch(setUser(response.data?.user));
-        localStorage.setItem("token", response.data?.accessToken);
-      }
-    } catch (error) {
-      console.error(error);
+    const response = await AuthService.login(email, password);
+    if (response) {
+      dispatch(setUser(response.data?.user));
+      localStorage.setItem("token", response.data?.accessToken);
     }
   };
 
 export const registerAsync =
   (username: string, email: string, password: string): AppThunk =>
   async (dispatch) => {
-    try {
-      const response = await AuthService.register(username, email, password);
-      if (response) {
-        dispatch(setUser(response.data?.user));
-        localStorage.setItem("token", response.data?.accessToken);
-      }
-    } catch (error) {
-      console.error(error);
+    const response = await AuthService.register(username, email, password);
+    if (response) {
+      dispatch(setUser(response.data?.user));
+      localStorage.setItem("token", response.data?.accessToken);
     }
   };
 
