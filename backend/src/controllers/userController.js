@@ -1,6 +1,7 @@
 const Sequelize = require("sequelize");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const UserDto = require("../dto/user-dto");
 
 const { User } = require("../../db/models");
 
@@ -36,12 +37,10 @@ exports.register = async (req, res) => {
     return res.status(400).json({ error: PASSWORD_ERROR_MSG });
   }
 
-  // Проверка наличия цифры в пароле
   if (!DIGIT_REGEX.test(password)) {
     return res.status(400).json({ error: PASSWORD_ERROR_MSG });
   }
 
-  // Проверка наличия заглавной буквы в пароле
   if (!UPPERCASE_LETTER_REGEX.test(password)) {
     return res.status(400).json({ error: PASSWORD_ERROR_MSG });
   }
@@ -72,15 +71,15 @@ exports.register = async (req, res) => {
 
   return res
     .status(200)
-    .cookie("access_token", `Bearer ${accessToken}`, {
-      httpOnly: true,
-      maxAge: 4 * 60 * 60 * 1000,
-    })
-    .cookie("refresh_token", refreshToken, {
+    .cookie("refreshToken", refreshToken, {
       httpOnly: true,
       maxAge: 30 * 24 * 60 * 60 * 1000,
     })
-    .json({ access_token: `Bearer ${accessToken}` });
+    .json({ accessToken: `Bearer ${accessToken}`, user: new UserDto(user) });
+};
+
+exports.logout = (req, res) => {
+  return res.clearCookie("refreshToken").status(200).json();
 };
 
 exports.login = async (req, res) => {
@@ -123,28 +122,24 @@ exports.login = async (req, res) => {
 
   return res
     .status(200)
-    .cookie("access_token", `Bearer ${accessToken}`, {
-      httpOnly: true,
-      maxAge: 4 * 60 * 60 * 1000,
-    })
-    .cookie("refresh_token", refreshToken, {
+    .cookie("refreshToken", refreshToken, {
       httpOnly: true,
       maxAge: 30 * 24 * 60 * 60 * 1000,
     })
-    .json({ access_token: `Bearer ${accessToken}` });
+    .json({ accessToken: `Bearer ${accessToken}`, user: new UserDto(user) });
 };
 
 exports.refresh = async (req, res) => {
   const { refreshToken } = req.cookies;
 
   if (!refreshToken) {
-    return res.status(401);
+    return res.status(401).json();
   }
 
   const userData = jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY);
 
   if (!userData) {
-    return res.status(401);
+    return res.status(401).json();
   }
 
   const user = await User.findOne({ where: { email: userData.email } });
@@ -167,13 +162,9 @@ exports.refresh = async (req, res) => {
 
   return res
     .status(200)
-    .cookie("access_token", `Bearer ${accessToken}`, {
-      httpOnly: true,
-      maxAge: 4 * 60 * 60 * 1000,
-    })
-    .cookie("refresh_token", updatedRefreshToken, {
+    .cookie("refreshToken", updatedRefreshToken, {
       httpOnly: true,
       maxAge: 30 * 24 * 60 * 60 * 1000,
     })
-    .json({ access_token: `Bearer ${accessToken}` });
+    .json({ accessToken: `Bearer ${accessToken}`, user: new UserDto(user) });
 };
