@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       password: DataTypes.STRING,
       refreshToken: DataTypes.STRING,
       isAdmin: DataTypes.BOOLEAN,
+      faves: DataTypes.ARRAY(DataTypes.TEXT),
     },
     {
       sequelize,

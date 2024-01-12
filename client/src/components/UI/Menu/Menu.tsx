@@ -12,7 +12,7 @@ interface IMenuProps {
 
 export const Menu: FC<IMenuProps> = ({ menu, restId }) => {
   return (
-    <div className={styles.scrollableDiv}>
+    <div className={styles.scrollableDiv} id="menu">
       <InfiniteScroll
         dataLength={menu.length}
         // next={loadMoreData}
