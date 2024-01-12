@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
+    "@emailjs/browser": "^3.12.1",
     "@pbe/react-yandex-maps": "^1.2.5",
     "@reduxjs/toolkit": "^2.0.1",
     "antd": "^5.12.8",

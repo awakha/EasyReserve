@@ -61,7 +61,7 @@ const SearchBar: React.FC = ({ setRestaurant }) => {
     <Select
       mode="multiple"
       placeholder="select one country"
-      defaultValue={["china"]}
+      defaultValue={["Russia"]}
       onChange={handleChange}
       optionLabelProp="label"
       options={options}
