@@ -39,7 +39,7 @@ export default function CreateRestForm({ setRestaurant }) {
         formData.append("images", data.images[i]);
       }
 
-      const res = await axios.post("http://localhost:3000/admin", formData, {
+      const res = await axios.post("http://localhost:3000/api/admin", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

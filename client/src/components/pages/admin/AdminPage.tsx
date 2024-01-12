@@ -13,7 +13,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/admin`, {
+      .get(`http://localhost:3000/api/admin`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -43,7 +43,7 @@ export default function AdminPage() {
   const deleteHandler = async (id) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3000/admin?id=${id}`
+        `http://localhost:3000/api/admin?id=${id}`
       );
       if (response.status === 200) {
         setRestaurant((prev) => prev.filter((el) => el.id !== id));

@@ -20,7 +20,7 @@ export default function UpdateRestForm({ setRestaurant, onClose, restaurantData 
 
   const updateHandler = async () => {
     try {
-      const res = await axios.put(`http://localhost:3000/admin`, { id: restaurantData.id, ...data });
+      const res = await axios.put(`http://localhost:3000/api/admin`, { id: restaurantData.id, ...data });
       if (res.status === 200) {
         setRestaurant((prev) => {
           // Обновите массив ресторанов, заменив старые данные новыми
