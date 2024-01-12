@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { Space, Button } from 'antd';
 
 type ModalProps = {
   date: string;
