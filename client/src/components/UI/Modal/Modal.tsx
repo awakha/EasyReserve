@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Space, Button } from 'antd';
+import { Space, Button, Modal } from 'antd';
 
 type ModalProps = {
   date: string;
@@ -9,7 +9,7 @@ type ModalProps = {
   userId: number;
 };
 
-export const Modal: FC<ModalProps> = ({ data }) => {
+export const ModalComponent: FC<ModalProps> = ({ data }) => {
   const info = () => {
     Modal.info({
       title: 'This is a notification message',

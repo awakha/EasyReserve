@@ -25,7 +25,7 @@ import { useParams } from 'react-router-dom';
 import { Timeslots } from '../Timeslots/Timeslots';
 import { SeatsList } from '../GuestsPicker/SeatsList';
 import { Button } from 'antd';
-import { Modal } from '../Modal/Modal';
+import { ModalComponent } from '../Modal/Modal';
 
 interface IDatePickerProps {
   schedule: IAvailableDateTimes[];
@@ -214,9 +214,9 @@ export const DatePicker: FC = () => {
                 }
               })()}
               {data.guestsCount > 0 ? (
-                // <Button onClick={bookingHandler}>Book</Button>
-                <Modal data={data} />
-              ) : null}
+                <Button onClick={bookingHandler}>Book</Button>
+              ) : // <ModalComponent data={data} />
+              null}
             </ol>
           </section>
         </div>
