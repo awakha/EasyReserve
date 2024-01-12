@@ -1,5 +1,20 @@
 const router = require("express").Router();
+const multer = require('multer');
+const path = require('path');
 const { Restaurant } = require("../../db/models");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const uploadFolder = path.join(process.cwd(), 'src/uploads');
+    cb(null, uploadFolder);
+  },
+  filename: function (req, file, cb) {
+    const ext = path.extname(file.originalname);
+    cb(null, Date.now() + ext);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 router.get("/", async (req, res) => {
   try {
@@ -10,15 +25,15 @@ router.get("/", async (req, res) => {
   }
 });
 
-
-router.post("/", async (req, res) => {
+router.post("/", upload.array('images', 5), async (req, res) => {
   try {
-    const rest = await Restaurant.create(req.body);
-    console.log(req.body)
+    const images = req.files.map(file => file.path);
+    const rest = await Restaurant.create({ ...req.body, images });
     const restData = rest.get();
     res.json(restData);
   } catch (err) {
     console.log(err.message)
+    res.status(500).send('Internal Server Error');
   }
 });
 
@@ -52,3 +67,4 @@ router.delete("/", async (req, res) => {
 });
 
 module.exports = router;
+

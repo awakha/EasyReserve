@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import styles from "./CreateAdminForm.module.css";
 import axios from "axios";
 
@@ -13,24 +13,50 @@ export default function CreateRestForm({ setRestaurant }) {
     timetableId: "",
   });
 
+  const fileInputRef = useRef();
+
   const chengeHandler = (e) => {
     setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  const fileChangeHandler = (e) => {
+    setData((prev) => ({ ...prev, images: e.target.files }));
+  };
+
   const addHendler = async (e) => {
+    e.preventDefault();
+
     try {
-      const res = await axios.post("http://localhost:3000/admin",  data);
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("description", data.description);
+      formData.append("address", data.address);
+      formData.append("cuisineId", data.cuisineId);
+      formData.append("cityId", data.cityId);
+      formData.append("timetableId", data.timetableId);
+
+      for (let i = 0; i < data.images.length; i++) {
+        formData.append("images", data.images[i]);
+      }
+
+      const res = await axios.post("http://localhost:3000/admin", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
       if (res.status === 200) {
         setRestaurant((prev) => [...prev, res.data]);
         setData({
           name: "",
           description: "",
           address: "",
-          images: [],
+          images: null,
           cuisineId: "",
           cityId: "",
           timetableId: "",
         });
+        fileInputRef.current.value = "";
       }
     } catch (error) {
       console.log(error);
@@ -39,6 +65,7 @@ export default function CreateRestForm({ setRestaurant }) {
 
   return (
     <form className={styles.createRestForm}>
+
       <input
         placeholder="Name"
         onChange={chengeHandler}
@@ -65,12 +92,12 @@ export default function CreateRestForm({ setRestaurant }) {
         className={styles.inputField}
       />
       <input
-        placeholder="Images"
-        onChange={chengeHandler}
-        type="text"
-        name="images"
-        value={data.images}
+        type="file"
+        accept="image/*"
+        onChange={fileChangeHandler}
+        ref={fileInputRef}
         className={styles.inputField}
+        multiple
       />
       <input
         placeholder="CuisineId"
@@ -96,7 +123,12 @@ export default function CreateRestForm({ setRestaurant }) {
         value={data.timetableId}
         className={styles.inputField}
       />
-      <button onClick={addHendler} type="button" className={styles.submitButton}>
+
+      <button
+        onClick={addHendler}
+        type="button"
+        className={styles.submitButton}
+      >
         Tuch me, please
       </button>
     </form>
