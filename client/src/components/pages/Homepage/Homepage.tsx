@@ -5,10 +5,7 @@ import { Link } from "react-router-dom";
 import { RestaurantItem } from "../../UI/RestaurantItem/RestaurantItem";
 import axios from "axios";
 import { RecommendContainer } from "../../UI/RecommendContainer/RecommendContainer";
-import authAxiosInstance from "../../../http";
-import AuthService from "../../../services/AuthService";
 import { useDispatch } from "react-redux";
-import { loginAsync } from "../../../store/slices/authSlice";
 
 export const Homepage: FC = () => {
   const [cities, setCities] = useState([]);
@@ -18,22 +15,6 @@ export const Homepage: FC = () => {
     const response = await axios.get("http://localhost:3000/api");
     setCities(response.data);
   };
-
-  const test = async () => {
-    // AuthService.login();
-    authAxiosInstance.get("/");
-    try {
-      await dispatch(loginAsync("test@test.com", "123456A"));
-
-      console.log("Успешный вход в систему!");
-    } catch (error) {
-      console.error("Ошибка входа:", error);
-    }
-  };
-
-  useEffect(() => {
-    test();
-  }, []);
 
   useEffect(() => {
     getData();
