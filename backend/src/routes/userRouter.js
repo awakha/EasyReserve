@@ -6,7 +6,7 @@ const userController = require("../controllers/userController");
 
 router.get("/", authMiddleware, (req, res) => {
   console.log(req.user);
-  return;
+  return res.status(200).json();
 });
 router.post("/register", userController.register);
 router.post("/login", userController.login);

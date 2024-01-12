@@ -15,12 +15,10 @@ export interface IRestaurant {
 }
 
 export interface IUser {
-  id?: number;
+  id: number;
   username: string;
   email: string;
   isAdmin: boolean;
-  createdAt?: Date;
-  updatedAt?: Date;
 }
 
 export interface ICuisine {
@@ -107,4 +105,9 @@ export interface IAvailableDateTimes {
   createdAt?: Date;
   updatedAt?: Date;
   Restaurant?: IRestaurant;
+}
+
+export interface IAuthResponse {
+  accessToken: string;
+  user: IUser;
 }

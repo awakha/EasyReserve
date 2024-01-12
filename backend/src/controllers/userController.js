@@ -1,6 +1,7 @@
 const Sequelize = require("sequelize");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const UserDto = require("../dto/user-dto");
 
 const { User } = require("../../db/models");
 
@@ -36,12 +37,10 @@ exports.register = async (req, res) => {
     return res.status(400).json({ error: PASSWORD_ERROR_MSG });
   }
 
-  // Проверка наличия цифры в пароле
   if (!DIGIT_REGEX.test(password)) {
     return res.status(400).json({ error: PASSWORD_ERROR_MSG });
   }
 
-  // Проверка наличия заглавной буквы в пароле
   if (!UPPERCASE_LETTER_REGEX.test(password)) {
     return res.status(400).json({ error: PASSWORD_ERROR_MSG });
   }
@@ -76,7 +75,7 @@ exports.register = async (req, res) => {
       httpOnly: true,
       maxAge: 30 * 24 * 60 * 60 * 1000,
     })
-    .json({ accessToken: `Bearer ${accessToken}` });
+    .json({ accessToken: `Bearer ${accessToken}`, user: new UserDto(user) });
 };
 
 exports.logout = (req, res) => {
@@ -127,7 +126,7 @@ exports.login = async (req, res) => {
       httpOnly: true,
       maxAge: 30 * 24 * 60 * 60 * 1000,
     })
-    .json({ accessToken: `Bearer ${accessToken}` });
+    .json({ accessToken: `Bearer ${accessToken}`, user: new UserDto(user) });
 };
 
 exports.refresh = async (req, res) => {
@@ -167,5 +166,5 @@ exports.refresh = async (req, res) => {
       httpOnly: true,
       maxAge: 30 * 24 * 60 * 60 * 1000,
     })
-    .json({ accessToken: `Bearer ${accessToken}` });
+    .json({ accessToken: `Bearer ${accessToken}`, user: new UserDto(user) });
 };
