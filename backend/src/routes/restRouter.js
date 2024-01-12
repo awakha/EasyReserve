@@ -3,6 +3,7 @@ const router = express.Router();
 
 const restController = require('../controllers/restController');
 
-router.get('/', restController.mainPage);
+router.get('/:id', restController.getOne);
+router.get('/schedule/:id', restController.getScheduleByRestId);
 
 module.exports = router;

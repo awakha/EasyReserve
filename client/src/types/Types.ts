@@ -7,11 +7,15 @@ export interface IRestaurant {
   cuisineId: number;
   cityId: number;
   timetableId: number;
+  avgScore?: string;
+  countReviews?: string;
   createdAt?: Date;
   updatedAt?: Date;
   Cuisine?: ICuisine;
   City?: ICity;
   Timetable?: ITimetable;
+  Dishes?: IDish[];
+  Reviews?: IReview[];
 }
 
 export interface IUser {
@@ -108,3 +112,9 @@ export interface IAvailableDateTimes {
   updatedAt?: Date;
   Restaurant?: IRestaurant;
 }
+
+export type Schedule = {
+  date: string;
+  slots: string[];
+  seats: number;
+};

@@ -1,0 +1,10 @@
+.progress_bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 100px;
+}
+
+.bar_group {
+  width: 170;
+}
