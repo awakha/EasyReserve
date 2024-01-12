@@ -30,6 +30,10 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
       },
+      faves: {
+        type: Sequelize.ARRAY(Sequelize.TEXT),
+        defaultValue: [],
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

@@ -1,5 +1,5 @@
 import { StarOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons';
-import { List, Avatar, Space } from 'antd';
+import { List, Space } from 'antd';
 import { FC } from 'react';
 import { IReview } from '../../../types/Types';
 import React from 'react';

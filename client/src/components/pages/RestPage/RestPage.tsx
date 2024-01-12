@@ -16,15 +16,7 @@ import { Menu } from '../../UI/Menu/Menu';
 import { ReviewsList } from '../../UI/ReviewList/ReviewsList';
 import { ProgressBar } from '../../UI/ProgressBar/ProgressBar';
 import { DatePicker } from '../../UI/DatePicker/DatePicker';
-
-interface IRestPageProps {
-  rest: IRestaurant;
-}
-
-type responseData = {
-  rests: IRestaurant[];
-  reviews: IReview[];
-};
+import { Like } from '../../UI/Buttons/Like';
 
 export const RestPage: FC = () => {
   const [rest, setRest] = useState<IRestaurant>();
@@ -33,7 +25,7 @@ export const RestPage: FC = () => {
 
   const fetchRestData = async (): Promise<void> => {
     try {
-      const response = await axios.get<responseData>(
+      const response = await axios.get(
         `http://localhost:3000/api/restaurants/${id}`
       );
       setRest(response.data.rests);
@@ -57,7 +49,7 @@ export const RestPage: FC = () => {
         <div className={styles.info}>
           <div className={styles.cuisine}>
             <h3>{rest?.Cuisine?.name}</h3>
-            <HeartOutlined className={styles.icon} />
+            <Like id={id} />
           </div>
 
           <h1>{rest?.name}</h1>
@@ -95,42 +87,26 @@ export const RestPage: FC = () => {
           </div>
 
           <div className={styles.btn_group}>
-            <Button className={styles.button} type="text">
+            <a href="#description" className={styles.button}>
               About
-            </Button>
-            <Button className={styles.button} type="text">
+            </a>
+            <a href="#menu" className={styles.button}>
               Menu
-            </Button>
-            <Button className={styles.button} type="text">
+            </a>
+            <a href="#reviews" className={styles.button}>
               Reviews
-            </Button>
+            </a>
           </div>
 
           <div className={styles.option_info}>
-            <div className={styles.description}>
-              Executing (default): SELECT "Restaurant"."id",
-              "Restaurant"."name", "Restaurant"."description",
-              "Restaurant"."address", "Restaurant"."images",
-              "Restaurant"."cuisineId", "Restaurant"."cityId",
-              "Restaurant"."timetableId", "Restaurant"."createdAt",
-              "Restaurant"."updatedAt", "Dishes"."id" AS "Dishes.id",
-              "Dishes"."name" AS "Dishes.name", "Dishes"."price" AS
-              "Dishes.price", "Dishes"."categoryId" AS "Dishes.categoryId",
-              "Dishes"."restId" AS "Dishes.restId", "Dishes"."createdAt" AS
-              "Dishes.createdAt", "Dishes"."updatedAt" AS "Dishes.updatedAt",
-              "Cuisine"."id" AS "Cuisine.id", "Cuisine"."name" AS
-              "Cuisine.name", "Cuisine"."createdAt" AS "Cuisine.createdAt",
-              "Cuisine"."updatedAt" AS "Cuisine.updatedAt" FROM "Restaurants" AS
-              "Restaurant" LEFT OUTER JOIN "Dishes" AS "Dishes" ON
-              "Restaurant"."id" = "Dishes"."restId" LEFT OUTER JOIN "Cuisines"
-              AS "Cuisine" ON "Restaurant"."cuisineId" = "Cuisine"."id" WHERE
-              "Restaurant"."id" = '1';
+            <div className={styles.description} id="description">
+              {rest?.description}
             </div>
 
             {rest?.Dishes ? <Menu menu={rest?.Dishes} /> : <span>No menu</span>}
 
             {/* reviews here */}
-            <div className={styles.reviews}>
+            <div className={styles.reviews} id="reviews">
               <ProgressBar avgScore={rest?.avgScore} />
               {rest?.Reviews ? (
                 <ReviewsList reviews={reviews} />
