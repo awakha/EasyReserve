@@ -1,25 +1,14 @@
-import { FC, useEffect, useState } from 'react';
-import { CustomLayout } from '../../Layout/CustomLayout';
-import styles from './Homepage.module.css';
-import { Link } from 'react-router-dom';
-import { RestaurantItem } from '../../UI/RestaurantItem/RestaurantItem';
-import axios from 'axios';
-import { RecommendContainer } from '../../UI/RecommendContainer/RecommendContainer';
-import authAxiosInstance from '../../../http';
-import AuthService from '../../../services/AuthService';
-import { useDispatch } from 'react-redux';
-import { loginAsync } from '../../../store/slices/authSlice';
-import { Redirect } from 'react-router-dom';
-import { Button } from 'antd';
 import { MobileOutlined } from '@ant-design/icons';
-import { FC, useEffect, useState } from 'react';
-import { CustomLayout } from '../../Layout/CustomLayout';
-import styles from './Homepage.module.css';
-import { Link } from 'react-router-dom';
-import { RestaurantItem } from '../../UI/RestaurantItem/RestaurantItem';
+import { Button } from 'antd';
 import axios from 'axios';
-import { RecommendContainer } from '../../UI/RecommendContainer/RecommendContainer';
+import { FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import authAxiosInstance from '../../../http';
+import { loginAsync } from '../../../store/slices/authSlice';
+import { CustomLayout } from '../../Layout/CustomLayout';
+import { RestaurantItem } from '../../UI/RestaurantItem/RestaurantItem';
+import styles from './Homepage.module.css';
 
 export const Homepage: FC = () => {
   const [cities, setCities] = useState([]);

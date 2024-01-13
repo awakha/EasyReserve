@@ -116,7 +116,7 @@ export const RestPage: FC = () => {
           </div>
         </div>
         <div className={styles.calendar}>
-          <DatePicker />
+          <DatePicker restName={rest?.name} />
         </div>
       </div>
     </CustomLayout>

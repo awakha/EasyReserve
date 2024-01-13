@@ -80,32 +80,28 @@ exports.getScheduleByRestId = async (req, res) => {
     reservations.forEach((res) => {
       schedule.forEach((el) => {
         if (
-          el.dataValues.date === res.dataValues.date &&
-          parseInt(el.dataValues.startTime) <=
-            parseInt(res.dataValues.startTime) &&
-          parseInt(el.dataValues.endTime) > parseInt(res.dataValues.startTime)
+          el.date === res.date &&
+          parseInt(el.startTime) <= parseInt(res.startTime) &&
+          parseInt(el.endTime) > parseInt(res.startTime)
         ) {
-          el.dataValues.guestsCount =
-            Number(el.dataValues.guestsCount) -
-            Number(res.dataValues.reservedSpots);
+          el.guestsCount = Number(el.guestsCount) - Number(res.reservedSpots);
         }
       });
     });
 
-    const data = schedule.map((el) => ({
-      date: el.dataValues.date,
-      slots: timeSlots(
-        30,
-        parseInt(el.dataValues.startTime),
-        parseInt(el.dataValues.endTime)
-      ),
-      seats: el.dataValues.guestsCount,
-    }));
+    const data = [];
+    schedule.forEach((el) => {
+      if (el.guestsCount) {
+        data.push({
+          date: el.date,
+          slots: timeSlots(30, parseInt(el.startTime), parseInt(el.endTime)),
+          seats: el.guestsCount,
+        });
+      }
+    });
 
     res.json(data);
   } catch (error) {
     console.log(error.message);
   }
 };
-
-// add favorites

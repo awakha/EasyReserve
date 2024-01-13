@@ -111,7 +111,6 @@ export interface IAvailableDateTimes {
   Restaurant?: IRestaurant;
 }
 
-
 export type Schedule = {
   date: string;
   slots: string[];
@@ -123,3 +122,11 @@ export interface IAuthResponse {
   user: IUser;
 }
 
+export type ReservationData = {
+  restaurant: string;
+  date: string;
+  startTime: string;
+  guestsCount: number;
+  restId: number;
+  userId: number;
+};

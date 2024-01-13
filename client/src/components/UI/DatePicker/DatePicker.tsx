@@ -1,31 +1,31 @@
 import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi2';
-import { FC, useEffect, useState } from 'react';
-import axios from 'axios';
 import {
-  startOfToday,
-  format,
-  parse,
+  add,
   eachDayOfInterval,
   endOfMonth,
-  add,
-  isSameDay,
-  parseISO,
+  format,
   getDay,
   isEqual,
-  isToday,
+  isSameDay,
   isSameMonth,
+  isToday,
+  parse,
+  parseISO,
+  startOfToday,
 } from 'date-fns';
+import { FC, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 import {
   IAvailableDateTimes,
   IReservation,
   Schedule,
 } from '../../../types/Types';
-import { useParams } from 'react-router-dom';
-import { Timeslots } from '../Timeslots/Timeslots';
 import { SeatsList } from '../GuestsPicker/SeatsList';
-import { Button } from 'antd';
+import { Timeslots } from '../Timeslots/Timeslots';
 import { ModalComponent } from '../Modal/Modal';
+import { OptionsMenu } from '../OptionsMenu/OptionsMenu';
 
 interface IDatePickerProps {
   schedule: IAvailableDateTimes[];
@@ -36,7 +36,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export const DatePicker: FC = () => {
+export const DatePicker: FC = ({ restName }) => {
   const { id } = useParams();
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
@@ -47,6 +47,7 @@ export const DatePicker: FC = () => {
 
   // USER ID FAKE
   const [data, setData] = useState({
+    restaurant: restName,
     date: '',
     startTime: '',
     guestsCount: 0,
@@ -88,14 +89,6 @@ export const DatePicker: FC = () => {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const bookingHandler = async (): Promise<void> => {
-    const response = await axios.post(
-      `http://localhost:3000/api/booking/`,
-      data
-    );
-    console.log(response.data);
   };
 
   useEffect(() => {
@@ -185,40 +178,13 @@ export const DatePicker: FC = () => {
             </div>
           </div>
 
-          <section
-            className="mt-12 md:mt-0 md:pl-14"
-            style={{ visibility: param.status ? 'visible' : 'hidden' }}
-          >
-            <h2 className="font-semibold text-gray-900">
-              {param.menu === 'slots'
-                ? 'Available Time Slots'
-                : 'Number Of Guests'}
-            </h2>
-            <ol>
-              {(() => {
-                switch (param.menu) {
-                  case 'slots':
-                    return selectedDaySchedule?.length > 0 ? (
-                      selectedDaySchedule?.map((day) => (
-                        <Timeslots
-                          slots={day.slots}
-                          setParam={setParam}
-                          setData={setData}
-                        />
-                      ))
-                    ) : (
-                      <p>No schedule or available time</p>
-                    );
-                  case 'seats':
-                    return <SeatsList setData={setData} />;
-                }
-              })()}
-              {data.guestsCount > 0 ? (
-                <Button onClick={bookingHandler}>Book</Button>
-              ) : // <ModalComponent data={data} />
-              null}
-            </ol>
-          </section>
+          <OptionsMenu
+            param={param}
+            data={data}
+            selectedDaySchedule={selectedDaySchedule}
+            setParam={setParam}
+            setData={setData}
+          ></OptionsMenu>
         </div>
       </div>
     </div>
