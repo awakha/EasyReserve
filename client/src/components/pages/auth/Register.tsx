@@ -1,24 +1,33 @@
 import { useState, FC } from "react";
 import { CustomLayout } from "../../Layout/CustomLayout";
+import { useNavigate } from "react-router-dom";
+import AuthService from "../../../services/AuthService";
+import { setUser } from "../../../store/slices/authSlice";
 import { useDispatch } from "react-redux";
-import { AppThunk } from "../../../store/store";
-import { registerAsync } from "../../../store/slices/authSlice";
 
 export const Register: FC = () => {
-  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
+  const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const [validationResult, setValidationResult] = useState("");
 
-  const handleLogin = async () => {
-    try {
-      await (dispatch as (action: AppThunk) => Promise<void>)(
-        registerAsync(username, email, password)
-      );
-    } catch (error) {
-      console.error("Ошибка входа:", error);
+  const handleRegister = async () => {
+    // Clear previous validation result
+    setValidationResult("");
+
+    const response = await AuthService.register(username, email, password);
+    if (response && response.status === 200) {
+      dispatch(setUser(response.data.user));
+      navigate("/");
+
+      return;
     }
+
+    setValidationResult(response.response.data.message);
   };
+
   return (
     <CustomLayout>
       <input
@@ -30,7 +39,7 @@ export const Register: FC = () => {
       <input
         type="text"
         placeholder="Username"
-        value={email}
+        value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
       <input
@@ -39,7 +48,13 @@ export const Register: FC = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={handleLogin}>Зарегестрироваться</button>
+      <button onClick={handleRegister}>Зарегестрироваться</button>
+
+      {validationResult ? (
+        <>
+          <h2>{validationResult}</h2>
+        </>
+      ) : null}
     </CustomLayout>
   );
 };

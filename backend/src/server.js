@@ -4,8 +4,10 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const errorMiddleware = require("./middleware/error-middleware");
 
 const apiRouter = require("./routes/apiRouter");
+const userRouter = require("./routes/userRouter");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -26,6 +28,8 @@ app.use(
 );
 
 app.use("/api", apiRouter);
+app.use("/user", userRouter);
+app.use(errorMiddleware);
 
 app.listen(PORT, () => {
   console.log(`Server has started on PORT ${PORT}`);

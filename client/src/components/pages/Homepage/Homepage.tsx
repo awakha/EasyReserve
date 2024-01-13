@@ -9,7 +9,6 @@ import { useDispatch } from "react-redux";
 
 export const Homepage: FC = () => {
   const [cities, setCities] = useState([]);
-  const dispatch = useDispatch();
 
   const getData = async () => {
     const response = await axios.get("http://localhost:3000/api");
