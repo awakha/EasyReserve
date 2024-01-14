@@ -1,45 +1,31 @@
 import { MobileOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
-import axios from 'axios';
 import { FC, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import authAxiosInstance from '../../../http';
-import { loginAsync } from '../../../store/slices/authSlice';
-import { CustomLayout } from '../../Layout/CustomLayout';
+import { Button } from 'antd';
+
 import { RestaurantItem } from '../../UI/RestaurantItem/RestaurantItem';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { getRestaurants } from '../../../store/thunkActions';
+import { CustomLayout } from '../../Layout/CustomLayout';
+import { Loader } from '../../UI/Loader/Loader';
+
 import styles from './Homepage.module.css';
 
 export const Homepage: FC = () => {
+  const dispatch = useAppDispatch();
+  const { restaurants, isLoading } = useAppSelector((state) => state.rests);
+
+  useEffect(() => {
+    dispatch(getRestaurants());
+  }, [dispatch]);
+
   const [cities, setCities] = useState([]);
-  const dispatch = useDispatch();
 
   const places = ['Moscow', 'Paris', 'Milan'];
 
-  const getData = async () => {
-    const response = await axios.get('http://localhost:3000/api');
-    setCities(response.data);
-  };
-
-  const test = async () => {
-    // AuthService.login();
-    authAxiosInstance.get('/');
-    try {
-      await dispatch(loginAsync('test@test.com', '123456A'));
-
-      console.log('Успешный вход в систему!');
-    } catch (error) {
-      console.error('Ошибка входа:', error);
-    }
-  };
-
-  useEffect(() => {
-    test();
-  }, []);
-
-  useEffect(() => {
-    getData();
-  }, []);
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <CustomLayout>

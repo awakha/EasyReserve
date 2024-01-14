@@ -12,7 +12,7 @@ export interface IRestaurant {
   createdAt?: Date;
   updatedAt?: Date;
   Cuisine?: ICuisine;
-  City?: ICity;
+  City?: ICity | string;
   Timetable?: ITimetable;
   Dishes?: IDish[];
   Reviews?: IReview[];

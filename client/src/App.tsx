@@ -1,14 +1,23 @@
-import { Route, Routes } from "react-router-dom";
-import "./App.css";
-import ListRestaurantsPage from "./components/pages/restaurantMapPage/listRestaurantsPage";
-import { Homepage } from "./components/pages/Homepage/Homepage";
-import AdminPage from "./components/pages/admin/AdminPage";
-import { RestPage } from "./components/pages/RestPage/RestPage";
-import AboutPage from "./components/pages/AboutPage/AboutPage";
-import Register from "./components/pages/authPage/Register";
-import { Login } from "./components/pages/auth/Login";
+import { Route, Routes } from 'react-router-dom';
+import { useEffect } from 'react';
+import './App.css';
+
+import AboutPage from './components/pages/AboutPage/AboutPage';
+import { Homepage } from './components/pages/Homepage/Homepage';
+import { RestPage } from './components/pages/RestPage/RestPage';
+import AdminPage from './components/pages/admin/AdminPage';
+import { Login } from './components/pages/auth/Login';
+import ListRestaurantsPage from './components/pages/restaurantMapPage/listRestaurantsPage';
+import { useAppDispatch } from './store/hooks';
+import { getRestaurants } from './store/thunkActions';
 
 function App() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getRestaurants());
+  }, []);
+
   return (
     <>
       <Routes>

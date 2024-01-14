@@ -1,43 +1,41 @@
 import { FC, useEffect, useState } from 'react';
-import { IRestaurant, IReview } from '../../../types/Types';
-import { CustomLayout } from '../../Layout/CustomLayout';
-import { Carousel } from '../../UI/Carousel/Carousel';
-
-import styles from './RestPage.module.css';
-import { HeartOutlined } from '@ant-design/icons';
 import { BsGeo } from 'react-icons/bs';
 import { CiForkAndKnife } from 'react-icons/ci';
-import { PiMoneyLight } from 'react-icons/pi';
 import { FaRegCommentDots } from 'react-icons/fa6';
-import { Button } from 'antd';
-import axios from 'axios';
+import { PiMoneyLight } from 'react-icons/pi';
 import { useParams } from 'react-router-dom';
-import { Menu } from '../../UI/Menu/Menu';
-import { ReviewsList } from '../../UI/ReviewList/ReviewsList';
-import { ProgressBar } from '../../UI/ProgressBar/ProgressBar';
-import { DatePicker } from '../../UI/DatePicker/DatePicker';
+
+import { useAppSelector } from '../../../store/hooks';
+import { IRestaurant, IReview } from '../../../types/Types';
+import { CustomLayout } from '../../Layout/CustomLayout';
 import { Like } from '../../UI/Buttons/Like';
+import { Carousel } from '../../UI/Carousel/Carousel';
+import { DatePicker } from '../../UI/DatePicker/DatePicker';
+import { Menu } from '../../UI/Menu/Menu';
+import { ProgressBar } from '../../UI/ProgressBar/ProgressBar';
+import { ReviewsList } from '../../UI/ReviewList/ReviewsList';
+import styles from './RestPage.module.css';
 
 export const RestPage: FC = () => {
-  const [rest, setRest] = useState<IRestaurant>();
-  const [reviews, setReviews] = useState<IReview[]>();
   const { id } = useParams();
+  const [rest, setRest] = useState<IRestaurant>();
+  const [reviewsArr, setReviewsArr] = useState<IReview[]>([]);
 
-  const fetchRestData = async (): Promise<void> => {
-    try {
-      const response = await axios.get(
-        `http://localhost:3000/api/restaurants/${id}`
-      );
-      setRest(response.data.rests);
-      setReviews(response.data.reviews);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { isLoading, rests, reviews } = useAppSelector((state) => state.rests);
 
   useEffect(() => {
-    fetchRestData();
-  }, []);
+    const rest = rests.filter((rest) => rest.id == id)[0];
+    const restReviews = reviews.filter((review) => review.restId == id);
+
+    if (rest && restReviews.length > 0) {
+      setRest(rest);
+      setReviewsArr(restReviews);
+    }
+  }, [id, rests, reviews]);
+
+  if (isLoading) {
+    return;
+  }
 
   return (
     <CustomLayout>
@@ -107,8 +105,8 @@ export const RestPage: FC = () => {
 
             <div className={styles.reviews} id="reviews">
               <ProgressBar avgScore={rest?.avgScore} />
-              {rest?.Reviews ? (
-                <ReviewsList reviews={reviews} />
+              {reviewsArr ? (
+                <ReviewsList reviews={reviewsArr} />
               ) : (
                 <span>No reviews</span>
               )}

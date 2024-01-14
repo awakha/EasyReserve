@@ -6,6 +6,7 @@ const {
   Cuisine,
   Review,
   User,
+  City,
   AvailableDateTime,
   Reservation,
 } = require('../../db/models');
@@ -101,6 +102,45 @@ exports.getScheduleByRestId = async (req, res) => {
     });
 
     res.json(data);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+exports.getAllRestaurants = async (req, res) => {
+  try {
+    const data = await Restaurant.findAll({
+      attributes: {
+        include: [
+          [Sequelize.fn('AVG', Sequelize.col('Reviews.score')), 'avgScore'],
+          [Sequelize.fn('COUNT', Sequelize.col('Reviews.id')), 'countReviews'],
+          [Sequelize.col('City.name'), 'city'],
+        ],
+      },
+      include: [
+        { model: Dish },
+        { model: Cuisine },
+        { model: City, attributes: [] },
+        { model: Review, attributes: [] },
+      ],
+      group: [
+        'Restaurant.id',
+        'Dishes.id',
+        'Cuisine.id',
+        'Reviews.id',
+        'City.id',
+      ],
+    });
+
+    const reviews = await Review.findAll({
+      include: {
+        model: User,
+        attributes: { exclude: ['password', 'refreshToken', 'email'] },
+      },
+      group: ['restId', 'Review.id', 'User.id'],
+    });
+
+    res.json({ rests: data, reviews });
   } catch (error) {
     console.log(error.message);
   }
