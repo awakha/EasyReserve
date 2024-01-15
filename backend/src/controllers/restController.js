@@ -55,7 +55,9 @@ exports.getOne = async (req, res) => {
 
     res.json({ rests: data, reviews });
   } catch (error) {
-    console.log(error.message);
+    res
+      .status(500)
+      .json({ message: 'Unexpected error occurred. Please, try again' });
   }
 };
 
@@ -116,7 +118,9 @@ exports.getScheduleByRestId = async (req, res) => {
 
     res.json(data);
   } catch (error) {
-    console.log(error.message);
+    res
+      .status(500)
+      .json({ message: 'Unexpected error occurred. Please, try again' });
   }
 };
 
@@ -155,6 +159,44 @@ exports.getAllRestaurants = async (req, res) => {
 
     res.json({ rests: data, reviews });
   } catch (error) {
-    console.log(error.message);
+    res
+      .status(500)
+      .json({ message: 'Unexpected error occurred. Please, try again' });
+  }
+};
+
+exports.mainPage = async (req, res) => {
+  try {
+    const restaurants = await Restaurant.findAll({
+      attributes: {
+        include: [
+          [Sequelize.fn('AVG', Sequelize.col('Reviews.score')), 'avgScore'],
+          [Sequelize.col('City.name'), 'city'],
+          [Sequelize.col('Cuisine.name'), 'cuisine'],
+        ],
+      },
+      include: [
+        { model: City, attributes: [] },
+        { model: Cuisine, attributes: [] },
+        { model: Review, attributes: [] },
+      ],
+      group: ['Restaurant.id', 'City.name', 'Cuisine.name'],
+    });
+
+    const data = {};
+    restaurants.forEach((rest) => {
+      if (data[rest.dataValues.city]) {
+        data[rest.dataValues.city] = [...data[rest.dataValues.city], rest];
+      } else {
+        data[rest.dataValues.city] = [rest];
+      }
+    });
+
+    const cities = Object.keys(data);
+    res.json({ data, cities });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: 'Unexpected error occurred. Please, try again' });
   }
 };

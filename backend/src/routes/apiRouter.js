@@ -1,5 +1,7 @@
 const apiRouter = require('express').Router();
 
+const authMiddleware = require('../middleware/auth-middleware');
+
 const adminRouter = require('./adminRouter');
 const indexRouter = require('./indexRouter');
 const mapRouter = require('./mapRouter');
@@ -10,12 +12,12 @@ const favesRouter = require('./favesRouter');
 const profileRouter = require('./profileRouter');
 
 apiRouter.use('/user', userRouter);
-apiRouter.use('/admin', adminRouter);
+apiRouter.use('/admin', [authMiddleware], adminRouter);
 apiRouter.use('/map', mapRouter);
 apiRouter.use('/restaurants', restRouter);
-apiRouter.use('/booking', bookingRouter);
-apiRouter.use('/faves', favesRouter);
+apiRouter.use('/booking', authMiddleware, bookingRouter);
+apiRouter.use('/faves', authMiddleware, favesRouter);
+apiRouter.use('/profile', authMiddleware, profileRouter);
 apiRouter.use('/', indexRouter);
-apiRouter.use('/profile', profileRouter);
 
 module.exports = apiRouter;
