@@ -1,18 +1,20 @@
+import { UserOutlined } from '@ant-design/icons';
 import { Button, Layout } from 'antd';
 import { FC } from 'react';
-import { UserOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
-import styles from './Header.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout, selectUser } from '../../../store/slices/authSlice';
+import { Link } from 'react-router-dom';
+import AuthService from '../../../services/AuthService';
+import { selectUser, setUser } from '../../../store/slices/authSlice';
+import styles from './Header.module.css';
 
 export const Header: FC = () => {
   // get user form store
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
-  const handleLogout = () => {
-    dispatch(logout());
+  const handleLogout = async () => {
+    await AuthService.logout();
+    dispatch(setUser(null));
   };
 
   return (
@@ -31,11 +33,15 @@ export const Header: FC = () => {
         <Link to={'/about'}>
           <h2 className={styles.brand_name}>About</h2>
         </Link>
+        <Link to={'/register'}>
+          <h2 className={styles.brand_name}>Register</h2>
+        </Link>
       </div>
 
       <div className={styles.profile_group}>
         <Link to={user ? '/profile' : '/login'}>
           <UserOutlined className={styles.icon} />
+          <h2>{user?.username}</h2>
         </Link>
 
         {user ? (

@@ -7,39 +7,39 @@ module.exports = {
       "Cities",
       [
         {
-          name: 'Moscow',
+          name: "Moscow",
           countryId: 1,
         },
         {
-          name: 'Saint Petersburg',
+          name: "Saint Petersburg",
           countryId: 1,
         },
         {
-          name: 'Sochi',
+          name: "Sochi",
           countryId: 1,
         },
         {
-          name: 'Milan',
+          name: "Milan",
           countryId: 2,
         },
         {
-          name: 'Roma',
+          name: "Roma",
           countryId: 2,
         },
         {
-          name: 'Florence',
+          name: "Florence",
           countryId: 2,
         },
         {
-          name: 'Paris',
+          name: "Paris",
           countryId: 3,
         },
         {
-          name: 'Strasbourg',
+          name: "Strasbourg",
           countryId: 3,
         },
         {
-          name: 'Perpignan',
+          name: "Perpignan",
           countryId: 3,
         },
       ],

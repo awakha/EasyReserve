@@ -14,4 +14,3 @@ router.post("/logout", userController.logout);
 router.post("/refresh", userController.refresh);
 
 module.exports = router;
-// http://localhost:3000/user/

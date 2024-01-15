@@ -3,41 +3,45 @@ import { IAuthResponse } from "../types/Types";
 
 const API_URL = "http://localhost:3000/user/";
 
-const authAxiosInstance = axios.create({
+const authorizedAxiosInstance = axios.create({
   withCredentials: true,
   baseURL: API_URL,
 });
 
-authAxiosInstance.interceptors.request.use((config) => {
-  config.headers.Authorization = localStorage.getItem("token");
+authorizedAxiosInstance.interceptors.request.use((config) => {
+  config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
   return config;
 });
 
-authAxiosInstance.interceptors.response.use(
+authorizedAxiosInstance.interceptors.response.use(
   (config) => {
     return config;
   },
   async (error) => {
     const originalRequest = error.config;
     if (
+      error.response &&
       error.response.status === 401 &&
       error.config &&
       !error.config._isRetry
     ) {
+      originalRequest._isRetry = true;
       try {
-        const response = await authAxiosInstance.post<IAuthResponse>(
+        const response = await authorizedAxiosInstance.post<IAuthResponse>(
           "/refresh",
           {
             withCredentials: true,
           }
         );
         localStorage.setItem("token", response.data.accessToken);
-        return authAxiosInstance.request(originalRequest);
+        return authorizedAxiosInstance.request(originalRequest);
       } catch (e) {
-        console.error(e);
+        return error;
       }
     }
+
+    return error;
   }
 );
 
-export default authAxiosInstance;
+export default authorizedAxiosInstance;

@@ -1,25 +1,29 @@
 import { useState, FC } from "react";
 import { CustomLayout } from "../../Layout/CustomLayout";
 import { useDispatch } from "react-redux";
-import { loginAsync } from "../../../store/slices/authSlice";
-import { AppThunk } from "../../../store/store";
 import { useNavigate } from "react-router-dom";
+import { setUser } from "../../../store/slices/authSlice";
+import AuthService from "../../../services/AuthService";
 
 export const Login: FC = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [validationResult, setValidationResult] = useState("");
 
   const handleLogin = async () => {
-    try {
-      await (dispatch as (action: AppThunk) => Promise<void>)(
-        loginAsync(email, password)
-      );
+    setValidationResult("");
+
+    const response = await AuthService.login(email, password);
+    if (response && response.status === 200) {
+      dispatch(setUser(response.data.user));
       navigate("/");
-    } catch (error) {
-      console.error("Ошибка входа:", error);
+
+      return;
     }
+
+    setValidationResult(response.response.data.message);
   };
 
   return (
@@ -37,6 +41,11 @@ export const Login: FC = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <button onClick={handleLogin}>Login</button>
+      {validationResult ? (
+        <>
+          <h2>{validationResult}</h2>
+        </>
+      ) : null}
     </CustomLayout>
   );
 };
