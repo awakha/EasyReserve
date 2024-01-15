@@ -1,7 +1,7 @@
-import axios from "axios";
-import { IAuthResponse } from "../types/Types";
+import axios from 'axios';
+import { IAuthResponse } from '../types/Types';
 
-const API_URL = "http://localhost:3000/user/";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const authorizedAxiosInstance = axios.create({
   withCredentials: true,
@@ -9,7 +9,7 @@ const authorizedAxiosInstance = axios.create({
 });
 
 authorizedAxiosInstance.interceptors.request.use((config) => {
-  config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
+  config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
   return config;
 });
 
@@ -28,12 +28,12 @@ authorizedAxiosInstance.interceptors.response.use(
       originalRequest._isRetry = true;
       try {
         const response = await authorizedAxiosInstance.post<IAuthResponse>(
-          "/refresh",
+          '/user/refresh',
           {
             withCredentials: true,
           }
         );
-        localStorage.setItem("token", response.data.accessToken);
+        localStorage.setItem('token', response.data.accessToken);
         return authorizedAxiosInstance.request(originalRequest);
       } catch (e) {
         return error;

@@ -1,11 +1,10 @@
-import { Space, Button, Modal } from 'antd';
-import { FC, useState } from 'react';
-import axios from 'axios';
+import { Button, Modal, Space } from 'antd';
+import { FC } from 'react';
 
 import { ReservationData } from '../../../types/Types';
-import styles from './Modal.module.css';
-import { Login } from '../../pages/auth/Login';
+import authorizedAxiosInstance from '../../../http';
 import { useNavigate } from 'react-router-dom';
+import styles from './Modal.module.css';
 
 interface IModalProps {
   data: ReservationData;
@@ -17,10 +16,7 @@ export const ModalComponent: FC<IModalProps> = ({ data }) => {
 
   const bookingHandler = async (): Promise<void> => {
     try {
-      const response = await axios.post(
-        `http://localhost:3000/api/booking/`,
-        data
-      );
+      const response = await authorizedAxiosInstance.post(`/booking`, data);
     } catch (err) {
       console.log(err.message);
     }

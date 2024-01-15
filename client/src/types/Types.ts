@@ -16,6 +16,7 @@ export interface IRestaurant {
   Timetable?: ITimetable;
   Dishes?: IDish[];
   Reviews?: IReview[];
+  cuisine?: string;
 }
 
 export interface IUser {

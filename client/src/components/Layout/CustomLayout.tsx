@@ -1,10 +1,9 @@
-import { Layout } from 'antd';
 import { FC, ReactNode } from 'react';
+import { Layout } from 'antd';
 
 import { Header } from './Header/CustomHeader';
-
-import styles from './Layout.module.css';
 import { Footer } from './Footer/Footer';
+import styles from './Layout.module.css';
 
 interface LayoutProps {
   children: ReactNode;

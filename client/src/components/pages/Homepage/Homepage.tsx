@@ -10,20 +10,30 @@ import { CustomLayout } from '../../Layout/CustomLayout';
 import { Loader } from '../../UI/Loader/Loader';
 
 import styles from './Homepage.module.css';
+import client from '../../../http/client';
+import { RecommendContainer } from '../../UI/RecommendContainer/RecommendContainer';
 
 export const Homepage: FC = () => {
   const dispatch = useAppDispatch();
-  const { restaurants, isLoading } = useAppSelector((state) => state.rests);
+  const [data, setData] = useState([]);
+  const [cities, setCities] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const response = await client.get('/restaurants/main');
+      setData(response.data.data);
+      setCities(response.data.cities);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   useEffect(() => {
     dispatch(getRestaurants());
+    fetchData();
   }, [dispatch]);
 
-  const [cities, setCities] = useState([]);
-
-  const places = ['Moscow', 'Paris', 'Milan'];
-
-  if (isLoading) {
+  if (!data || !cities) {
     return <Loader />;
   }
 
@@ -34,32 +44,18 @@ export const Homepage: FC = () => {
         alt="img"
         className={styles.home_img}
       />
-      <div>
+      {/* <div>
         <Button size="large">
           <MobileOutlined></MobileOutlined>
           <a href="https://t.me/EasyReserve_bot">TG</a>
         </Button>
-      </div>
-      {/* {cities.map((city) => (
-        <RecommendContainer city={city} key={city.id} />
-      ))} */}
-      {places.map((city) => (
-        <div className={styles.recommend_container}>
-          <div className={styles.recommend_header}>
-            <h2>Popular restaurants in {city}</h2>
-            <Link to={`/restaurants/${city}`}>
-              <h3>See more</h3>
-            </Link>
-          </div>
-          <div className={styles.rests_container}>
-            <RestaurantItem />
-            <RestaurantItem />
-
-            <RestaurantItem />
-
-            <RestaurantItem />
-          </div>
-        </div>
+      </div> */}
+      {cities.map((city) => (
+        <RecommendContainer
+          city={city}
+          restaurants={data[city]}
+          key={`${city}-${data[city].length}`}
+        />
       ))}
     </CustomLayout>
   );

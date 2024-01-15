@@ -36,7 +36,6 @@ export const RestPage: FC = () => {
   if (isLoading) {
     return;
   }
-
   return (
     <CustomLayout>
       <div className={styles.carousel}>
