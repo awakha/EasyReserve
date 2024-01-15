@@ -7,6 +7,7 @@ const restRouter = require('./restRouter');
 const userRouter = require('./userRouter');
 const bookingRouter = require('./bookingRouter');
 const favesRouter = require('./favesRouter');
+const profileRouter = require('./profileRouter');
 
 apiRouter.use('/user', userRouter);
 apiRouter.use('/admin', adminRouter);
@@ -15,5 +16,6 @@ apiRouter.use('/restaurants', restRouter);
 apiRouter.use('/booking', bookingRouter);
 apiRouter.use('/faves', favesRouter);
 apiRouter.use('/', indexRouter);
+apiRouter.use('/profile', profileRouter);
 
 module.exports = apiRouter;

@@ -7,6 +7,7 @@ import { RestPage } from "./components/pages/RestPage/RestPage";
 import AboutPage from "./components/pages/AboutPage/AboutPage";
 import { Login } from "./components/pages/auth/Login";
 import { Register } from "./components/pages/auth/Register";
+import ProfilePage from "./components/pages/ProfilePage/ProfilePage";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/restaurants/:city"></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
+        <Route path="/profile" element={<ProfilePage />}></Route>
       </Routes>
     </>
   );
