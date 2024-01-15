@@ -12,6 +12,8 @@ import { Register } from './components/pages/auth/Register';
 import ListRestaurantsPage from './components/pages/restaurantMapPage/listRestaurantsPage';
 import { useAppDispatch } from './store/hooks';
 import { getRestaurants } from './store/thunkActions';
+import ProfilePage from "./components/pages/ProfilePage/ProfilePage";
+
 
 function App() {
   const dispatch = useAppDispatch();
@@ -29,6 +31,7 @@ function App() {
         <Route path="/about" element={<AboutPage />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
+        <Route path="/profile" element={<ProfilePage />}></Route>
         <Route path="/" element={<Homepage />}></Route>
         <Route path="/*" element={<Error />}></Route>
       </Routes>

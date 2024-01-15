@@ -1,29 +1,48 @@
-import React, { useRef } from 'react';
-import emailjs from '@emailjs/browser';
+import React, { useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
 
 export const FormComponent = () => {
   const form = useRef();
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const sendEmail = (e) => {
     e.preventDefault();
 
-    emailjs.sendForm('service_gvkblak', 'template_hdn2izp', form.current, '6mATXsPnieIECtTTa')
-      .then((result) => {
+    emailjs
+      .sendForm(
+        "service_gvkblak",
+        "template_hdn2izp",
+        form.current,
+        "6mATXsPnieIECtTTa"
+      )
+      .then(
+        (result) => {
           console.log(result.text);
-      }, (error) => {
+          setIsSubmitted(true); // Set the state to indicate successful submission
+          form.current.reset(); // Reset the form input values
+        },
+        (error) => {
           console.log(error.text);
-      });
+        }
+      );
   };
 
   return (
     <form ref={form} onSubmit={sendEmail}>
-      <label>Name</label>
+      <label>Имя</label>
       <input type="text" name="user_name" />
-      <label>Email</label>
+      <label>Электронная почта</label>
       <input type="email" name="user_email" />
-      <label>Message</label>
+      <label>Текст сообщения</label>
       <textarea name="message" />
       <input type="submit" value="Send" />
+
+      {isSubmitted && (
+        <div>
+          <p>Сообщение отправлено!</p>
+          <button onClick={() => setIsSubmitted(false)}>Закрыть</button>
+        </div>
+      )}
     </form>
   );
 };
