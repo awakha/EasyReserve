@@ -1,24 +1,26 @@
-import { useState, FC } from "react";
-import { CustomLayout } from "../../Layout/CustomLayout";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { setUser } from "../../../store/slices/authSlice";
-import AuthService from "../../../services/AuthService";
+import { useState, FC } from 'react';
+import { CustomLayout } from '../../Layout/CustomLayout';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { setUser } from '../../../store/slices/authSlice';
+import AuthService from '../../../services/AuthService';
 
 export const Login: FC = () => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const [validationResult, setValidationResult] = useState("");
+  const [validationResult, setValidationResult] = useState('');
 
   const handleLogin = async () => {
-    setValidationResult("");
+    setValidationResult('');
 
     const response = await AuthService.login(email, password);
     if (response && response.status === 200) {
+      console.log(response.data.user);
+
       dispatch(setUser(response.data.user));
-      navigate("/");
+      // navigate("/");
 
       return;
     }
