@@ -8,7 +8,6 @@ import { selectUser, setUser } from '../../../store/slices/authSlice';
 import styles from './Header.module.css';
 
 export const Header: FC = () => {
-  // get user form store
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
@@ -33,18 +32,29 @@ export const Header: FC = () => {
         <Link to={'/about'}>
           <h2 className={styles.brand_name}>About</h2>
         </Link>
-        <Link to={'/register'}>
-          <h2 className={styles.brand_name}>Register</h2>
-        </Link>
       </div>
 
       <div className={styles.profile_group}>
-        <Link to={user ? '/profile' : '/login'}>
-          <UserOutlined className={styles.icon} />
-          <h2>{user?.username}</h2>
+        <Link to={user ? '/profile' : '/register'}>
+          <h2>{user ? user?.username : 'Registration'}</h2>
+        </Link>
+        <h2>|</h2>
+        <Link to={'/login'}>
+          {user ? (
+            <Button
+              type="text"
+              className={styles.logout_btn}
+              size="small"
+              onClick={handleLogout}
+            >
+              Logout
+            </Button>
+          ) : (
+            <h2>Login</h2>
+          )}
         </Link>
 
-        {user ? (
+        {/* {user ? (
           <>
             <h2>|</h2>
             <Button
@@ -56,7 +66,7 @@ export const Header: FC = () => {
               Logout
             </Button>
           </>
-        ) : null}
+        ) : null} */}
       </div>
     </Layout.Header>
   );

@@ -1,9 +1,17 @@
+import { Button } from 'antd';
 import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-interface IErrorProps {
-  message: string;
-}
+export const Error: FC = () => {
+  const navigate = useNavigate();
 
-export const Error: FC<IErrorProps> = ({ message }) => {
-  return <div>{message}</div>;
+  return (
+    <div>
+      <h1>404 Page Not Found</h1>
+      <p>The page you were looking for doesn't exist</p>
+      <p>
+        <Button onClick={() => navigate('/')}>Home</Button>
+      </p>
+    </div>
+  );
 };

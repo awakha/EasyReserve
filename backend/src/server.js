@@ -5,11 +5,6 @@ const morgan = require('morgan');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
-const apiRouter = require('./routes/apiRouter');
-const express = require('express');
-const morgan = require('morgan');
-const cors = require('cors');
-const cookieParser = require('cookie-parser');
 const errorMiddleware = require('./middleware/error-middleware');
 
 const apiRouter = require('./routes/apiRouter');
