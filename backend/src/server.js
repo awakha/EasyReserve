@@ -29,7 +29,6 @@ app.use(
 );
 
 app.use('/api', apiRouter);
-app.use('/api', apiRouter);
 app.use('/user', userRouter);
 app.use(errorMiddleware);
 

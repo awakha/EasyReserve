@@ -17,8 +17,11 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 router.get("/", async (req, res) => {
+  console.log('+++++++++++_')
   try {
+
     const rests = await Restaurant.findAll({ raw: true, nest: true });
+
     res.json(rests);
   } catch (err) {
     res.status(401).json(err);

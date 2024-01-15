@@ -6,6 +6,7 @@ import UpdateRestForm from "./UpdateRestForm";
 import { CustomLayout } from "../../Layout/CustomLayout";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../store/slices/authSlice";
+import { Error } from "../Error/Error";
 
 export default function AdminPage() {
   const user = useSelector(selectUser);
@@ -20,7 +21,15 @@ export default function AdminPage() {
       .get(`http://localhost:3000/api/admin`, {
         withCredentials: true,
       })
-      .then((res) => {
+      .then((res) => { 
+        console.log("123456789", res.data.status)
+        
+        if(res && res.status === 401) {
+          console.log('1234567654321')
+        return <Error />
+      }
+      
+
         setRestaurant(res.data);
       })
       .catch((e) => console.log(e));
