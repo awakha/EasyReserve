@@ -1,5 +1,5 @@
-const RequestValidator = require("../validation/request-validator");
-const authService = require("../service/auth-service");
+const RequestValidator = require('../validation/request-validator');
+const authService = require('../service/auth-service');
 
 exports.register = async (req, res, next) => {
   try {
@@ -10,7 +10,7 @@ exports.register = async (req, res, next) => {
 
     return res
       .status(200)
-      .cookie("refreshToken", userData.refreshToken, {
+      .cookie('refreshToken', userData.refreshToken, {
         httpOnly: true,
         maxAge: 30 * 24 * 60 * 60 * 1000,
       })
@@ -27,9 +27,10 @@ exports.login = async (req, res, next) => {
     RequestValidator.validateLoginRequest(email, password);
     const userData = await authService.login(email, password);
 
+    console.log(userData);
     return res
       .status(200)
-      .cookie("refreshToken", userData.refreshToken, {
+      .cookie('refreshToken', userData.refreshToken, {
         httpOnly: true,
         maxAge: 30 * 24 * 60 * 60 * 1000,
       })
@@ -47,7 +48,7 @@ exports.refresh = async (req, res, next) => {
 
     return res
       .status(200)
-      .cookie("refreshToken", userData.refreshToken, {
+      .cookie('refreshToken', userData.refreshToken, {
         httpOnly: true,
         maxAge: 30 * 24 * 60 * 60 * 1000,
       })
@@ -58,5 +59,5 @@ exports.refresh = async (req, res, next) => {
 };
 
 exports.logout = (req, res) => {
-  return res.clearCookie("refreshToken").status(200).json();
+  return res.clearCookie('refreshToken').status(200).json();
 };

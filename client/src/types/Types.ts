@@ -12,7 +12,7 @@ export interface IRestaurant {
   createdAt?: Date;
   updatedAt?: Date;
   Cuisine?: ICuisine;
-  City?: ICity;
+  City?: ICity | string;
   Timetable?: ITimetable;
   Dishes?: IDish[];
   Reviews?: IReview[];
@@ -122,3 +122,12 @@ export interface IAuthResponse {
   refreshToken: string;
   user: IUser;
 }
+
+export type ReservationData = {
+  restaurant: string;
+  date: string;
+  startTime: string;
+  guestsCount: number;
+  restId: number;
+  userId: number;
+};

@@ -1,23 +1,31 @@
-import { FC, useEffect, useState } from "react";
-import { CustomLayout } from "../../Layout/CustomLayout";
-import styles from "./Homepage.module.css";
-import { Link } from "react-router-dom";
-import { RestaurantItem } from "../../UI/RestaurantItem/RestaurantItem";
-import axios from "axios";
-import { RecommendContainer } from "../../UI/RecommendContainer/RecommendContainer";
-import { useDispatch } from "react-redux";
+import { MobileOutlined } from '@ant-design/icons';
+import { FC, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from 'antd';
+
+import { RestaurantItem } from '../../UI/RestaurantItem/RestaurantItem';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { getRestaurants } from '../../../store/thunkActions';
+import { CustomLayout } from '../../Layout/CustomLayout';
+import { Loader } from '../../UI/Loader/Loader';
+
+import styles from './Homepage.module.css';
 
 export const Homepage: FC = () => {
-  const [cities, setCities] = useState([]);
-
-  const getData = async () => {
-    const response = await axios.get("http://localhost:3000/api");
-    setCities(response.data);
-  };
+  const dispatch = useAppDispatch();
+  const { restaurants, isLoading } = useAppSelector((state) => state.rests);
 
   useEffect(() => {
-    getData();
-  }, []);
+    dispatch(getRestaurants());
+  }, [dispatch]);
+
+  const [cities, setCities] = useState([]);
+
+  const places = ['Moscow', 'Paris', 'Milan'];
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <CustomLayout>
@@ -26,10 +34,16 @@ export const Homepage: FC = () => {
         alt="img"
         className={styles.home_img}
       />
+      <div>
+        <Button size="large">
+          <MobileOutlined></MobileOutlined>
+          <a href="https://t.me/EasyReserve_bot">TG</a>
+        </Button>
+      </div>
       {/* {cities.map((city) => (
         <RecommendContainer city={city} key={city.id} />
       ))} */}
-      {/* {places.map((city) => (
+      {places.map((city) => (
         <div className={styles.recommend_container}>
           <div className={styles.recommend_header}>
             <h2>Popular restaurants in {city}</h2>
@@ -46,7 +60,7 @@ export const Homepage: FC = () => {
             <RestaurantItem />
           </div>
         </div>
-      ))} */}
+      ))}
     </CustomLayout>
   );
 };

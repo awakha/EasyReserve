@@ -1,7 +1,8 @@
-import style from "./RestaurantPage.module.css";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
+import style from './RestaurantPage.module.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import Slider from 'react-slick';
+import { Link } from 'react-router-dom';
 
 export default function RestaurantPage({ restaurant }) {
   const sliderSettings = {
@@ -15,23 +16,25 @@ export default function RestaurantPage({ restaurant }) {
   return (
     <>
       {restaurant.map((rest) => (
-        <div className={style.cardRest} key={rest.id}>
-          <div className={style.content}>
-            <div className={style.imageContainer}>
-              <Slider {...sliderSettings}>
-                {rest.images.map((image, index) => (
-                  <div key={index}>
-                    <img src={image} alt="" />
-                  </div>
-                ))}
-              </Slider>
-            </div>
-            <div className={style.descriptionContainer}>
-              <p>{rest.description}</p>
-              <p>{rest.address}</p>
+        <Link to={`/restaurants/${rest.id}`}>
+          <div className={style.cardRest} key={rest.id}>
+            <div className={style.content}>
+              <div className={style.imageContainer}>
+                <Slider {...sliderSettings}>
+                  {rest.images.map((image, index) => (
+                    <div key={index}>
+                      <img src={image} alt="" />
+                    </div>
+                  ))}
+                </Slider>
+              </div>
+              <div className={style.descriptionContainer}>
+                <p>{rest.description}</p>
+                <p>{rest.address}</p>
+              </div>
             </div>
           </div>
-        </div>
+        </Link>
       ))}
     </>
   );

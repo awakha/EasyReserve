@@ -1,14 +1,13 @@
-import { Button, Layout } from "antd";
-import { FC } from "react";
-import { UserOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
-import styles from "./Header.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import { selectUser, setUser } from "../../../store/slices/authSlice";
-import AuthService from "../../../services/AuthService";
+import { UserOutlined } from '@ant-design/icons';
+import { Button, Layout } from 'antd';
+import { FC } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import AuthService from '../../../services/AuthService';
+import { selectUser, setUser } from '../../../store/slices/authSlice';
+import styles from './Header.module.css';
 
 export const Header: FC = () => {
-  // get user form store
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
@@ -19,32 +18,43 @@ export const Header: FC = () => {
 
   return (
     <Layout.Header className={styles.header}>
-      <Link to={"/"}>
+      <Link to={'/'}>
         <h1 className={styles.brand_name}>EasyReserve</h1>
       </Link>
 
       <div className={styles.link_group}>
-        <Link to={"/"}>
+        <Link to={'/'}>
           <h2 className={styles.brand_name}>Home</h2>
         </Link>
-        <Link to={"/restaurants"}>
+        <Link to={'/restaurants'}>
           <h2 className={styles.brand_name}>Restaurants</h2>
         </Link>
-        <Link to={"/about"}>
+        <Link to={'/about'}>
           <h2 className={styles.brand_name}>About</h2>
-        </Link>
-        <Link to={"/register"}>
-          <h2 className={styles.brand_name}>Register</h2>
         </Link>
       </div>
 
       <div className={styles.profile_group}>
-        <Link to={user ? "/profile" : "/login"}>
-          <UserOutlined className={styles.icon} />
-          <h2>{user?.username}</h2>
+        <Link to={user ? '/profile' : '/register'}>
+          <h2>{user ? user?.username : 'Registration'}</h2>
+        </Link>
+        <h2>|</h2>
+        <Link to={'/login'}>
+          {user ? (
+            <Button
+              type="text"
+              className={styles.logout_btn}
+              size="small"
+              onClick={handleLogout}
+            >
+              Logout
+            </Button>
+          ) : (
+            <h2>Login</h2>
+          )}
         </Link>
 
-        {user ? (
+        {/* {user ? (
           <>
             <h2>|</h2>
             <Button
@@ -56,7 +66,7 @@ export const Header: FC = () => {
               Logout
             </Button>
           </>
-        ) : null}
+        ) : null} */}
       </div>
     </Layout.Header>
   );

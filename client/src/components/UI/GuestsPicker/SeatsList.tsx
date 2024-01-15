@@ -1,15 +1,19 @@
-import { Button, Skeleton } from 'antd';
-import { FC, useState } from 'react';
+import { Button } from 'antd';
+import { FC, ReactNode, useState } from 'react';
+
+import { Schedule } from '../../../types/Types';
 
 import styles from './SeatsList.module.css';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { TbRuler2Off } from 'react-icons/tb';
 
 interface ISeatsListProps {
   setData: () => void;
+  selectedDaySchedule: Schedule[];
 }
 
-export const SeatsList: FC<ISeatsListProps> = ({ setData }) => {
+export const SeatsList: FC<ISeatsListProps> = ({
+  setData,
+  selectedDaySchedule,
+}) => {
   const [array, setArray] = useState(new Array(10).fill(null));
   const [name, setName] = useState('more options');
 

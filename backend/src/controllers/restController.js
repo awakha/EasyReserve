@@ -6,6 +6,7 @@ const {
   Cuisine,
   Review,
   User,
+  City,
   AvailableDateTime,
   Reservation,
 } = require('../../db/models');
@@ -80,27 +81,25 @@ exports.getScheduleByRestId = async (req, res) => {
     reservations.forEach((res) => {
       schedule.forEach((el) => {
         if (
-          el.dataValues.date === res.dataValues.date &&
-          parseInt(el.dataValues.startTime) <=
-            parseInt(res.dataValues.startTime) &&
-          parseInt(el.dataValues.endTime) > parseInt(res.dataValues.startTime)
+          el.date === res.date &&
+          parseInt(el.startTime) <= parseInt(res.startTime) &&
+          parseInt(el.endTime) > parseInt(res.startTime)
         ) {
-          el.dataValues.guestsCount =
-            Number(el.dataValues.guestsCount) -
-            Number(res.dataValues.reservedSpots);
+          el.guestsCount = Number(el.guestsCount) - Number(res.reservedSpots);
         }
       });
     });
 
-    const data = schedule.map((el) => ({
-      date: el.dataValues.date,
-      slots: timeSlots(
-        30,
-        parseInt(el.dataValues.startTime),
-        parseInt(el.dataValues.endTime)
-      ),
-      seats: el.dataValues.guestsCount,
-    }));
+    const data = [];
+    schedule.forEach((el) => {
+      if (el.guestsCount) {
+        data.push({
+          date: el.date,
+          slots: timeSlots(30, parseInt(el.startTime), parseInt(el.endTime)),
+          seats: el.guestsCount,
+        });
+      }
+    });
 
     res.json(data);
   } catch (error) {
@@ -108,4 +107,41 @@ exports.getScheduleByRestId = async (req, res) => {
   }
 };
 
-// add favorites
+exports.getAllRestaurants = async (req, res) => {
+  try {
+    const data = await Restaurant.findAll({
+      attributes: {
+        include: [
+          [Sequelize.fn('AVG', Sequelize.col('Reviews.score')), 'avgScore'],
+          [Sequelize.fn('COUNT', Sequelize.col('Reviews.id')), 'countReviews'],
+          [Sequelize.col('City.name'), 'city'],
+        ],
+      },
+      include: [
+        { model: Dish },
+        { model: Cuisine },
+        { model: City, attributes: [] },
+        { model: Review, attributes: [] },
+      ],
+      group: [
+        'Restaurant.id',
+        'Dishes.id',
+        'Cuisine.id',
+        'Reviews.id',
+        'City.id',
+      ],
+    });
+
+    const reviews = await Review.findAll({
+      include: {
+        model: User,
+        attributes: { exclude: ['password', 'refreshToken', 'email'] },
+      },
+      group: ['restId', 'Review.id', 'User.id'],
+    });
+
+    res.json({ rests: data, reviews });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
