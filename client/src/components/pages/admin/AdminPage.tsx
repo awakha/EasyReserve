@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import style from "./AdminPage.module.css";
-import axios from "axios";
-import CreateRestForm from "./CreateRestForm";
-import UpdateRestForm from "./UpdateRestForm";
-import { CustomLayout } from "../../Layout/CustomLayout";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { CustomLayout } from '../../Layout/CustomLayout';
+import style from './AdminPage.module.css';
+import CreateRestForm from './CreateRestForm';
+import UpdateRestForm from './UpdateRestForm';
 
 export default function AdminPage() {
   const [restaurant, setRestaurant] = useState([]);

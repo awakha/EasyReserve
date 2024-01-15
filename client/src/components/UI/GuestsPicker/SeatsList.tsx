@@ -1,19 +1,14 @@
 import { Button } from 'antd';
-import { FC, ReactNode, useState } from 'react';
-
-import { Schedule } from '../../../types/Types';
+import { FC, useState } from 'react';
 
 import styles from './SeatsList.module.css';
 
 interface ISeatsListProps {
   setData: () => void;
-  selectedDaySchedule: Schedule[];
+  availableSeats: number;
 }
 
-export const SeatsList: FC<ISeatsListProps> = ({
-  setData,
-  selectedDaySchedule,
-}) => {
+export const SeatsList: FC<ISeatsListProps> = ({ setData, availableSeats }) => {
   const [array, setArray] = useState(new Array(10).fill(null));
   const [name, setName] = useState('more options');
 
@@ -29,6 +24,7 @@ export const SeatsList: FC<ISeatsListProps> = ({
         {array.map((_, i) => (
           <Button
             className={styles.button}
+            disabled={i + 1 > availableSeats}
             onClick={() => setData((prev) => ({ ...prev, guestsCount: i + 1 }))}
           >
             {i + 1}

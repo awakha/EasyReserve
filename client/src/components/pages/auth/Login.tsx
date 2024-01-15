@@ -17,10 +17,8 @@ export const Login: FC = () => {
 
     const response = await AuthService.login(email, password);
     if (response && response.status === 200) {
-      console.log(response.data.user);
-
       dispatch(setUser(response.data.user));
-      // navigate("/");
+      navigate('/');
 
       return;
     }

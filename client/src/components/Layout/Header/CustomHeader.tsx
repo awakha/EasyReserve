@@ -1,4 +1,3 @@
-import { UserOutlined } from '@ant-design/icons';
 import { Button, Layout } from 'antd';
 import { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';

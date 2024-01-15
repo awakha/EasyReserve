@@ -1,10 +1,10 @@
-import { FC, useRef } from 'react';
+import { FC, useState } from 'react';
 import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi2';
 
 import { ReservationData, Schedule } from '../../../types/Types';
 import { SeatsList } from '../GuestsPicker/SeatsList';
-import { Timeslots } from '../Timeslots/Timeslots';
 import { ModalComponent } from '../Modal/Modal';
+import { Timeslots } from '../Timeslots/Timeslots';
 
 import styles from './OptionMenu.module.css';
 
@@ -26,6 +26,8 @@ export const OptionsMenu: FC<IOptionMenuProps> = ({
   setData,
   selectedDaySchedule,
 }) => {
+  const [availableSeats, setAvailableSeats] = useState(0);
+
   const back = () => {
     setParam((prev) => ({ ...prev, menu: 'slots' }));
     setData((prev) => ({ ...prev, guestsCount: 0, startTime: '' }));
@@ -69,11 +71,11 @@ export const OptionsMenu: FC<IOptionMenuProps> = ({
               return selectedDaySchedule?.length > 0 ? (
                 selectedDaySchedule?.map((day, i) => (
                   <Timeslots
-                    slots={day.slots}
+                    selectedDaySchedule={selectedDaySchedule[i]}
+                    setAvailableSeats={setAvailableSeats}
                     setParam={setParam}
                     setData={setData}
                     data-id={i}
-                    selectedDaySchedule={selectedDaySchedule}
                   />
                 ))
               ) : (
@@ -81,10 +83,7 @@ export const OptionsMenu: FC<IOptionMenuProps> = ({
               );
             case 'seats':
               return (
-                <SeatsList
-                  setData={setData}
-                  selectedDaySchedule={selectedDaySchedule}
-                />
+                <SeatsList setData={setData} availableSeats={availableSeats} />
               );
           }
         })()}

@@ -1,4 +1,4 @@
-import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi2';
+import axios from 'axios';
 import {
   add,
   eachDayOfInterval,
@@ -14,17 +14,15 @@ import {
   startOfToday,
 } from 'date-fns';
 import { FC, useEffect, useState } from 'react';
+import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi2';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 
+import { useAppSelector } from '../../../store/hooks';
 import {
   IAvailableDateTimes,
   IReservation,
   Schedule,
 } from '../../../types/Types';
-import { SeatsList } from '../GuestsPicker/SeatsList';
-import { Timeslots } from '../Timeslots/Timeslots';
-import { ModalComponent } from '../Modal/Modal';
 import { OptionsMenu } from '../OptionsMenu/OptionsMenu';
 
 interface IDatePickerProps {
@@ -44,15 +42,15 @@ export const DatePicker: FC = ({ restName }) => {
   const [schedule, setSchedule] = useState<Schedule[]>();
   const firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date());
   const [param, setParam] = useState({ status: false, menu: 'slots' });
+  const user = useAppSelector((state) => state.auth.user);
 
-  // USER ID FAKE
   const [data, setData] = useState({
     restaurant: restName,
     date: '',
     startTime: '',
     guestsCount: 0,
     restId: Number(id),
-    userId: 1,
+    userId: user?.id,
   });
 
   const days = eachDayOfInterval({
@@ -83,7 +81,10 @@ export const DatePicker: FC = ({ restName }) => {
   const fetchData = async (): Promise<void> => {
     try {
       const response = await axios.get<Schedule[]>(
-        `http://localhost:3000/api/restaurants/schedule/${id}`
+        `http://localhost:3000/api/restaurants/schedule/${id}/${format(
+          today,
+          'yyyy-MM-dd'
+        )}`
       );
       setSchedule(response.data);
     } catch (error) {

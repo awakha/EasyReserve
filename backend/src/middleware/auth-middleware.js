@@ -1,5 +1,5 @@
-const jwt = require("jsonwebtoken");
-const ApiError = require("../exceptions/api-error");
+const jwt = require('jsonwebtoken');
+const ApiError = require('../exceptions/api-error');
 
 module.exports = (req, res, next) => {
   try {
@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
       return next(ApiError.UnauthorizedError());
     }
 
-    const accessToken = authHeader.split(" ")[1];
+    const accessToken = authHeader.split(' ')[1];
 
     if (!accessToken) {
       return next(ApiError.UnauthorizedError());

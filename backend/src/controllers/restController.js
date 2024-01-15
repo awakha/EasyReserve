@@ -1,5 +1,4 @@
 const Sequelize = require('sequelize');
-
 const {
   Restaurant,
   Dish,
@@ -63,9 +62,22 @@ exports.getOne = async (req, res) => {
 exports.getScheduleByRestId = async (req, res) => {
   try {
     const { id } = req.params;
-    const schedule = await AvailableDateTime.findAll({ where: { restId: id } });
+    const schedule = await AvailableDateTime.findAll({
+      where: {
+        restId: id,
+        date: {
+          [Sequelize.Op.gte]: req.params.date,
+        },
+      },
+    });
+
     const reservations = await Reservation.findAll({
-      where: { restId: id },
+      where: {
+        restId: id,
+        date: {
+          [Sequelize.Op.gte]: req.params.date,
+        },
+      },
       attributes: [
         'startTime',
         'restId',
@@ -85,14 +97,15 @@ exports.getScheduleByRestId = async (req, res) => {
           parseInt(el.startTime) <= parseInt(res.startTime) &&
           parseInt(el.endTime) > parseInt(res.startTime)
         ) {
-          el.guestsCount = Number(el.guestsCount) - Number(res.reservedSpots);
+          el.guestsCount =
+            Number(el.guestsCount) - Number(res.dataValues.reservedSpots);
         }
       });
     });
 
     const data = [];
     schedule.forEach((el) => {
-      if (el.guestsCount) {
+      if (el.guestsCount > 0) {
         data.push({
           date: el.date,
           slots: timeSlots(30, parseInt(el.startTime), parseInt(el.endTime)),
