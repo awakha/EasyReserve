@@ -18,7 +18,9 @@ const upload = multer({ storage: storage });
 
 router.get("/", async (req, res) => {
   try {
+
     const rests = await Restaurant.findAll({ raw: true, nest: true });
+
     res.json(rests);
   } catch (err) {
     res.status(401).json(err);

@@ -6,6 +6,7 @@ import UpdateRestForm from "./UpdateRestForm";
 import { CustomLayout } from "../../Layout/CustomLayout";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../store/slices/authSlice";
+import { Error } from "../Error/Error";
 
 export default function AdminPage() {
   const user = useSelector(selectUser);
@@ -16,15 +17,21 @@ export default function AdminPage() {
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3000/api/admin`, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setRestaurant(res.data);
-      })
-      .catch((e) => console.log(e));
-  }, []);
+    if (user && user.isAdmin) {
+      axios
+        .get(`http://localhost:3000/api/admin`, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          setRestaurant(res.data);
+        })
+        .catch((e) => console.log(e));
+    }
+  }, [user]);
+
+  if(!user || !user.isAdmin) {
+    return <Error />
+  }
 
   const handleAddRestClick = () => {
     setShowCreateForm(true);
