@@ -3,6 +3,7 @@ const Sequelize = require('sequelize');
 const { City, Restaurant, Dish, Review, Cuisine } = require('../../db/models');
 
 exports.mainPage = async (req, res) => {
+  // console.log("req.user", req.user)
   try {
     const data = await Restaurant.findAll({
       attributes: [

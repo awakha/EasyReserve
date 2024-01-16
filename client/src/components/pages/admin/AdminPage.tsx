@@ -17,23 +17,21 @@ export default function AdminPage() {
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3000/api/admin`, {
-        withCredentials: true,
-      })
-      .then((res) => { 
-        console.log("123456789", res.data.status)
-        
-        if(res && res.status === 401) {
-          console.log('1234567654321')
-        return <Error />
-      }
-      
+    if (user && user.isAdmin) {
+      axios
+        .get(`http://localhost:3000/api/admin`, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          setRestaurant(res.data);
+        })
+        .catch((e) => console.log(e));
+    }
+  }, [user]);
 
-        setRestaurant(res.data);
-      })
-      .catch((e) => console.log(e));
-  }, []);
+  if(!user || !user.isAdmin) {
+    return <Error />
+  }
 
   const handleAddRestClick = () => {
     setShowCreateForm(true);

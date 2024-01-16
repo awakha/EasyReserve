@@ -13,7 +13,8 @@ const favesRouter = require('./favesRouter');
 const profileRouter = require('./profileRouter');
 
 apiRouter.use('/user', userRouter);
-apiRouter.use('/admin', [authMiddleware, adminAuthMiddleware], adminRouter);
+// apiRouter.use('/admin', authMiddleware, adminAuthMiddleware, adminRouter);
+apiRouter.use('/admin', adminRouter);
 apiRouter.use('/map', mapRouter);
 apiRouter.use('/restaurants', restRouter);
 apiRouter.use('/booking', bookingRouter);
