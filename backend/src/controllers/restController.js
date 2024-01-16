@@ -1,5 +1,4 @@
 const Sequelize = require('sequelize');
-
 const {
   Restaurant,
   Dish,
@@ -56,16 +55,31 @@ exports.getOne = async (req, res) => {
 
     res.json({ rests: data, reviews });
   } catch (error) {
-    console.log(error.message);
+    res
+      .status(500)
+      .json({ message: 'Unexpected error occurred. Please, try again' });
   }
 };
 
 exports.getScheduleByRestId = async (req, res) => {
   try {
     const { id } = req.params;
-    const schedule = await AvailableDateTime.findAll({ where: { restId: id } });
+    const schedule = await AvailableDateTime.findAll({
+      where: {
+        restId: id,
+        date: {
+          [Sequelize.Op.gte]: req.params.date,
+        },
+      },
+    });
+
     const reservations = await Reservation.findAll({
-      where: { restId: id },
+      where: {
+        restId: id,
+        date: {
+          [Sequelize.Op.gte]: req.params.date,
+        },
+      },
       attributes: [
         'startTime',
         'restId',
@@ -85,14 +99,15 @@ exports.getScheduleByRestId = async (req, res) => {
           parseInt(el.startTime) <= parseInt(res.startTime) &&
           parseInt(el.endTime) > parseInt(res.startTime)
         ) {
-          el.guestsCount = Number(el.guestsCount) - Number(res.reservedSpots);
+          el.guestsCount =
+            Number(el.guestsCount) - Number(res.dataValues.reservedSpots);
         }
       });
     });
 
     const data = [];
     schedule.forEach((el) => {
-      if (el.guestsCount) {
+      if (el.guestsCount > 0) {
         data.push({
           date: el.date,
           slots: timeSlots(30, parseInt(el.startTime), parseInt(el.endTime)),
@@ -103,7 +118,9 @@ exports.getScheduleByRestId = async (req, res) => {
 
     res.json(data);
   } catch (error) {
-    console.log(error.message);
+    res
+      .status(500)
+      .json({ message: 'Unexpected error occurred. Please, try again' });
   }
 };
 
@@ -142,6 +159,44 @@ exports.getAllRestaurants = async (req, res) => {
 
     res.json({ rests: data, reviews });
   } catch (error) {
-    console.log(error.message);
+    res
+      .status(500)
+      .json({ message: 'Unexpected error occurred. Please, try again' });
+  }
+};
+
+exports.mainPage = async (req, res) => {
+  try {
+    const restaurants = await Restaurant.findAll({
+      attributes: {
+        include: [
+          [Sequelize.fn('AVG', Sequelize.col('Reviews.score')), 'avgScore'],
+          [Sequelize.col('City.name'), 'city'],
+          [Sequelize.col('Cuisine.name'), 'cuisine'],
+        ],
+      },
+      include: [
+        { model: City, attributes: [] },
+        { model: Cuisine, attributes: [] },
+        { model: Review, attributes: [] },
+      ],
+      group: ['Restaurant.id', 'City.name', 'Cuisine.name'],
+    });
+
+    const data = {};
+    restaurants.forEach((rest) => {
+      if (data[rest.dataValues.city]) {
+        data[rest.dataValues.city] = [...data[rest.dataValues.city], rest];
+      } else {
+        data[rest.dataValues.city] = [rest];
+      }
+    });
+
+    const cities = Object.keys(data);
+    res.json({ data, cities });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: 'Unexpected error occurred. Please, try again' });
   }
 };

@@ -24,7 +24,6 @@ export const Login: FC = () => {
       }
       dispatch(setUser(response.data.user));
       navigate("/");
-
       return;
     }
 

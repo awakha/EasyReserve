@@ -1,10 +1,10 @@
-import { UserOutlined } from '@ant-design/icons';
-import { Button, Layout } from 'antd';
-import { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import AuthService from '../../../services/AuthService';
+import { Button, Layout } from 'antd';
+import { FC } from 'react';
+
 import { selectUser, setUser } from '../../../store/slices/authSlice';
+import AuthService from '../../../services/AuthService';
 import styles from './Header.module.css';
 
 export const Header: FC = () => {
@@ -53,20 +53,6 @@ export const Header: FC = () => {
             <h2>Login</h2>
           )}
         </Link>
-
-        {/* {user ? (
-          <>
-            <h2>|</h2>
-            <Button
-              type="text"
-              className={styles.logout_btn}
-              size="small"
-              onClick={handleLogout}
-            >
-              Logout
-            </Button>
-          </>
-        ) : null} */}
       </div>
     </Layout.Header>
   );

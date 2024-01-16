@@ -5,14 +5,12 @@ import { getRestaurants } from '../thunkActions';
 interface IRestaurantsState {
   rests: IRestaurant[];
   reviews: IReview[];
-
   isLoading: boolean;
 }
 
 const initialState: IRestaurantsState = {
   rests: [],
   reviews: [],
-
   isLoading: false,
 };
 

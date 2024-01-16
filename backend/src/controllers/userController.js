@@ -27,7 +27,6 @@ exports.login = async (req, res, next) => {
     RequestValidator.validateLoginRequest(email, password);
     const userData = await authService.login(email, password);
 
-    console.log(userData);
     return res
       .status(200)
       .cookie('refreshToken', userData.refreshToken, {

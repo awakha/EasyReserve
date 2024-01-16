@@ -3,7 +3,8 @@ const { User } = require('../../db/models');
 exports.toggleFaves = async (req, res) => {
   try {
     const { restId } = req.params;
-    const user = await User.findOne({ where: { id: 1 } });
+    const userId = req.user.id;
+    const user = await User.findOne({ where: { id: userId } });
     const index = user.faves.indexOf(restId);
 
     let newFaves;
@@ -30,7 +31,7 @@ exports.toggleFaves = async (req, res) => {
 exports.getFaves = async (req, res) => {
   try {
     const usersFaves = await User.findOne({
-      where: { id: 1 },
+      where: { id: req.user.id },
       attributes: ['faves'],
     });
 
