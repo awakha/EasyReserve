@@ -17,9 +17,13 @@ export const Login: FC = () => {
 
     const response = await AuthService.login(email, password);
     if (response && response.status === 200) {
+      if (response.data.user.username === "admin") {
+        dispatch(setUser(response.data.user));
+        navigate("/admin");
+        return;
+      }
       dispatch(setUser(response.data.user));
-      navigate('/');
-
+      navigate("/");
       return;
     }
 

@@ -1,11 +1,15 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { CustomLayout } from '../../Layout/CustomLayout';
-import style from './AdminPage.module.css';
-import CreateRestForm from './CreateRestForm';
-import UpdateRestForm from './UpdateRestForm';
+import React, { useEffect, useState } from "react";
+import style from "./AdminPage.module.css";
+import axios from "axios";
+import CreateRestForm from "./CreateRestForm";
+import UpdateRestForm from "./UpdateRestForm";
+import { CustomLayout } from "../../Layout/CustomLayout";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../store/slices/authSlice";
 
 export default function AdminPage() {
+  const user = useSelector(selectUser);
+
   const [restaurant, setRestaurant] = useState([]);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
