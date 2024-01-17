@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import AuthService from "../../../services/AuthService";
 import { setUser } from "../../../store/slices/authSlice";
 import { useDispatch } from "react-redux";
+import style from "./Register.module.css";
+import { Button } from "antd";
 
 export const Register: FC = () => {
   const [email, setEmail] = useState("");
@@ -30,31 +32,33 @@ export const Register: FC = () => {
 
   return (
     <CustomLayout>
-      <input
-        type="text"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={handleRegister}>Зарегестрироваться</button>
+      <div className={style.form}>
+        <input
+          type="text"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Имя пользователя"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Пароль"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button onClick={handleRegister}>Зарегестрироваться</Button>
 
-      {validationResult ? (
-        <>
-          <h2>{validationResult}</h2>
-        </>
-      ) : null}
+        {validationResult ? (
+          <>
+            <h2>{validationResult}</h2>
+          </>
+        ) : null}
+      </div>
     </CustomLayout>
   );
 };
