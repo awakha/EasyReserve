@@ -46,7 +46,7 @@ export const Homepage: FC = () => {
           Если хочешь посетить любимый ресторан в ближайшие 3 дня можешь
           воспользоваться нашим ботом помощником
         </p>
-        <a href="">LINK HERE</a>
+        <a href="https://t.me/EasyReserve_bot" target='_blank'>LINK HERE</a>
       </div>
       {cuisines.map((cuisine) => (
         <RecommendContainer

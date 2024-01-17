@@ -4,7 +4,7 @@
 
 .info {
   padding: 20px;
-  width: 65%;
+  width: 50%;
   height: 100%;
   border: 2px solid black;
   border-radius: 20px;
@@ -70,3 +70,12 @@ a {
   justify-content: space-between;
   gap: 50px;
 }
+
+.main {
+  display: flex;
+}
+
+.calendar {
+  margin-left: 40px;
+}
+
