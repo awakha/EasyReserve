@@ -1,28 +1,25 @@
-import { MobileOutlined } from '@ant-design/icons';
 import { FC, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Button } from 'antd';
 
-import { RestaurantItem } from '../../UI/RestaurantItem/RestaurantItem';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { useAppDispatch } from '../../../store/hooks';
 import { getRestaurants } from '../../../store/thunkActions';
 import { CustomLayout } from '../../Layout/CustomLayout';
 import { Loader } from '../../UI/Loader/Loader';
 
-import styles from './Homepage.module.css';
 import client from '../../../http/client';
 import { RecommendContainer } from '../../UI/RecommendContainer/RecommendContainer';
+import styles from './Homepage.module.css';
 
 export const Homepage: FC = () => {
   const dispatch = useAppDispatch();
   const [data, setData] = useState([]);
-  const [cities, setCities] = useState([]);
+  const [cuisines, setCuisines] = useState([]);
 
   const fetchData = async () => {
     try {
       const response = await client.get('/restaurants/main');
+
       setData(response.data.data);
-      setCities(response.data.cities);
+      setCuisines(response.data.cuisine);
     } catch (error) {
       console.log(error.message);
     }
@@ -33,7 +30,7 @@ export const Homepage: FC = () => {
     fetchData();
   }, [dispatch]);
 
-  if (!data || !cities) {
+  if (!data || !cuisines) {
     return <Loader />;
   }
 
@@ -44,17 +41,18 @@ export const Homepage: FC = () => {
         alt="img"
         className={styles.home_img}
       />
-      {/* <div>
-        <Button size="large">
-          <MobileOutlined></MobileOutlined>
-          <a href="https://t.me/EasyReserve_bot">TG</a>
-        </Button>
-      </div> */}
-      {cities.map((city) => (
+      <div className={styles.tg_link}>
+        <p>
+          Если хочешь посетить любимый ресторан в ближайшие 3 дня можешь
+          воспользоваться нашим ботом помощником
+        </p>
+        <a href="">LINK HERE</a>
+      </div>
+      {cuisines.map((cuisine) => (
         <RecommendContainer
-          city={city}
-          restaurants={data[city]}
-          key={`${city}-${data[city].length}`}
+          cuisine={cuisine}
+          restaurants={data[cuisine]}
+          key={`${cuisine}-${data[cuisine].length}`}
         />
       ))}
     </CustomLayout>

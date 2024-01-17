@@ -24,6 +24,7 @@ import {
   Schedule,
 } from '../../../types/Types';
 import { OptionsMenu } from '../OptionsMenu/OptionsMenu';
+import client from '../../../http/client';
 
 interface IDatePickerProps {
   schedule: IAvailableDateTimes[];
@@ -80,11 +81,8 @@ export const DatePicker: FC = ({ restName }) => {
 
   const fetchData = async (): Promise<void> => {
     try {
-      const response = await axios.get<Schedule[]>(
-        `http://localhost:3000/api/restaurants/schedule/${id}/${format(
-          today,
-          'yyyy-MM-dd'
-        )}`
+      const response = await client.get(
+        `/restaurants/schedule/${id}/${format(today, 'yyyy-MM-dd')}`
       );
       setSchedule(response.data);
     } catch (error) {
@@ -94,7 +92,7 @@ export const DatePicker: FC = ({ restName }) => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [data]);
 
   return (
     <div className="pt-16">

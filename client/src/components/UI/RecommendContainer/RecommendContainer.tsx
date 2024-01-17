@@ -6,19 +6,19 @@ import styles from './RecommendContainer.module.css';
 import { IRestaurant } from '../../../types/Types';
 
 interface IProps {
-  city: string;
+  cuisine: string;
   restaurants: IRestaurant[];
 }
 
-export const RecommendContainer: FC<IProps> = ({ city, restaurants }) => {
+export const RecommendContainer: FC<IProps> = ({ cuisine, restaurants }) => {
   const [rests, setRests] = useState(restaurants.splice(0, 4));
 
   return (
     <div className={styles.recommend_container}>
       <div className={styles.recommend_header}>
-        <h2>Popular restaurants in {city}</h2>
-        <Link to={`/restaurants/${city}`}>
-          <h3>See more</h3>
+        <h2>Популярное в разделе: {cuisine}</h2>
+        <Link to={`/restaurants/${cuisine}`}>
+          <h3>посмотреть еще</h3>
         </Link>
       </div>
       <div className={styles.rests_container}>

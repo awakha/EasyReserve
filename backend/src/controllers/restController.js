@@ -50,7 +50,10 @@ exports.getOne = async (req, res) => {
 
     const reviews = await Review.findAll({
       where: { restId: id },
-      include: { model: User, attributes: { exclude: ['password'] } },
+      include: {
+        model: User,
+        attributes: { exclude: ['password', 'refreshToken'] },
+      },
     });
 
     res.json({ rests: data, reviews });
@@ -171,29 +174,30 @@ exports.mainPage = async (req, res) => {
       attributes: {
         include: [
           [Sequelize.fn('AVG', Sequelize.col('Reviews.score')), 'avgScore'],
-          [Sequelize.col('City.name'), 'city'],
           [Sequelize.col('Cuisine.name'), 'cuisine'],
         ],
       },
       include: [
-        { model: City, attributes: [] },
         { model: Cuisine, attributes: [] },
         { model: Review, attributes: [] },
       ],
-      group: ['Restaurant.id', 'City.name', 'Cuisine.name'],
+      group: ['Restaurant.id', 'Cuisine.name'],
     });
 
     const data = {};
     restaurants.forEach((rest) => {
-      if (data[rest.dataValues.city]) {
-        data[rest.dataValues.city] = [...data[rest.dataValues.city], rest];
+      if (data[rest.dataValues.cuisine]) {
+        data[rest.dataValues.cuisine] = [
+          ...data[rest.dataValues.cuisine],
+          rest,
+        ];
       } else {
-        data[rest.dataValues.city] = [rest];
+        data[rest.dataValues.cuisine] = [rest];
       }
     });
 
-    const cities = Object.keys(data);
-    res.json({ data, cities });
+    const cuisine = Object.keys(data);
+    res.json({ data, cuisine });
   } catch (error) {
     res
       .status(500)
