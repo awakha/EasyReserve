@@ -7,31 +7,31 @@ import axios from "axios";
 const options: SelectProps["options"] = [
   {
     label: "China",
-    value: "china",
+    value: "international",
     emoji: "🇨🇳",
     desc: "China (中国)",
   },
   {
     label: "RUS",
-    value: "Russia",
+    value: "russian",
     emoji: "🇷🇺",
     desc: "RUS (Россия)",
   },
   {
     label: "Japan",
-    value: "japan",
+    value: "international",
     emoji: "🇯🇵",
     desc: "Japan (日本)",
   },
   {
     label: "French",
-    value: "France",
+    value: "international",
     emoji: "🇫🇷",
     desc: "French (France)",
   },
   {
     label: "Italy",
-    value: "Italy",
+    value: "international",
     emoji: "🇮🇹",
     desc: "Italy (Italia)",
   },
@@ -41,7 +41,7 @@ const SearchBar: React.FC = ({ setRestaurant }) => {
   const handleChange = (value: string[]) => {
     axios
       .post(
-        "http://localhost:3000/api/search",
+        "http://localhost:3000/api/map/search",
         { countries: value },
         {
           headers: {
@@ -60,8 +60,7 @@ const SearchBar: React.FC = ({ setRestaurant }) => {
   return (
     <Select
       mode="multiple"
-      placeholder="select one country"
-      defaultValue={["Russia"]}
+      placeholder="выбери кухню какой страны, ты хотел бы найти"
       onChange={handleChange}
       optionLabelProp="label"
       options={options}
