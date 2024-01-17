@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import style from "./listRestaurantsPage.module.css";
 import axios from "axios";
 import RestaurantPage from "../restaurant/RestaurantsPage";
@@ -8,6 +8,7 @@ import SearchBar from "../../SearchBar/SearchBar";
 
 export default function RestaurantMapPage() {
   const [restaurant, setRestaurant] = useState([]);
+  const videoRef = useRef(null);
 
   useEffect(() => {
     axios
@@ -20,9 +21,25 @@ export default function RestaurantMapPage() {
       .catch((e) => console.log(e));
   }, []);
 
+  useEffect(() => {
+    videoRef.current.play();
+  }, []);
+
   return (
     <CustomLayout>
-      <SearchBar setRestaurant={setRestaurant}/>
+      <div className={style.video_container}>
+        <video ref={videoRef} className={style.video} loop muted>
+          <source src="/search.mp4" type="video/mp4" />
+        </video>
+        <div className={style.overlay}></div>
+        <div className={style.search_container}>
+          <h2 className={style.search_title}>Найди свой ресторан</h2>
+          <SearchBar
+            setRestaurant={setRestaurant}
+            className={style.SearchBar}
+          />
+        </div>
+      </div>
       <div className={style.RestaurantMapPage}>
         <div className={style.RestaurantList}>
           <RestaurantPage restaurant={restaurant} />

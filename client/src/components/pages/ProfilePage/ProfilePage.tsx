@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import style from "./ProfilePage.module.css";
 import { CustomLayout } from "../../Layout/CustomLayout";
 import { useSelector } from "react-redux";
@@ -10,6 +10,12 @@ const ProfilePage: React.FC = () => {
   const user = useSelector(selectUser);
 
   const [reservation, setReservation] = useState([]);
+
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    videoRef.current.play();
+  }, []);
 
   useEffect(() => {
     authorizedAxiosInstance
@@ -35,29 +41,35 @@ const ProfilePage: React.FC = () => {
 
   return (
     <CustomLayout>
-      <div className={style.profile}>
-        <h2 className={style.title}>Профиль пользователя, {user?.username}</h2>
-        {reservation ? (
-          reservation.map((reserv) => (
-            <div key={reserv.id} className={style.reservationContainer}>
-              <h3>Твой забронированный ресторан:</h3>
-              <div className={style.reservationInfo}>
-                <p>Ресторан: {reserv["Restaurant.name"]}</p>
-                <p>Дата: {reserv.date}</p>
-                <p>Время: {reserv.startTime}</p>
-                <p>Количество гостей: {reserv.guestsCount}</p>
+      <div className={style.videoContainer}>
+        <video ref={videoRef} className={style.video} muted loop>
+          <source src="/profile.mp4" type="video/mp4" />
+        </video>
+        <div className={style.overlay}></div>
+        <div className={style.profile}>
+          <h2 className={style.title}>Профиль пользователя, {user?.username}</h2>
+          {reservation ? (
+            reservation.map((reserv) => (
+              <div key={reserv.id} className={style.reservationContainer}>
+                <h3>Твой забронированный ресторан:</h3>
+                <div className={style.reservationInfo}>
+                  <p>Ресторан: {reserv["Restaurant.name"]}</p>
+                  <p>Дата: {reserv.date}</p>
+                  <p>Время: {reserv.startTime}</p>
+                  <p>Количество гостей: {reserv.guestsCount}</p>
+                </div>
+                <button
+                  className={style.cancelButton}
+                  onClick={() => cancelReservation(reserv.id)}
+                >
+                  Отменить бронирование
+                </button>
               </div>
-              <button
-                className={style.cancelButton}
-                onClick={() => cancelReservation(reserv.id)}
-              >
-                Отменить бронирование
-              </button>
-            </div>
-          ))
-        ) : (
-          <p>Нет забронированных ресторанов</p>
-        )}
+            ))
+          ) : (
+            <p>Нет забронированных ресторанов</p>
+          )}
+        </div>
       </div>
     </CustomLayout>
   );
