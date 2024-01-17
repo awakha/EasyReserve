@@ -1,26 +1,18 @@
-const { Restaurant, City, Country } = require("../../db/models");
+const { Restaurant, City, Cuisine } = require("../../db/models");
 
 exports.searchComponent = async (req, res) => {
   try {
-    const restData = await Country.findAll({
+    const restData = await Cuisine.findAll({
       include: [
         {
-          model: City,
-          include: [
-            {
-              model: Restaurant,
-            },
-          ],
+          model: Restaurant,
         },
       ],
       where: {
         name: req.body.countries,
       },
     });
-    const restaurantData = restData[0].Cities.flatMap((city) =>
-      city.Restaurants.map((restaurant) => restaurant)
-    );
-
+    const restaurantData = restData[0].Restaurants.map((restaurant) => restaurant);
     res.json(restaurantData);
   } catch (error) {
     console.log(error.message);
