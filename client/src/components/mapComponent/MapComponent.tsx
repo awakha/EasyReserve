@@ -7,7 +7,7 @@ import setupCache from 'axios';
 export default function Maps() {
   const defaultState = {
     center: [55.751574, 37.573856],
-    zoom: 13,
+    zoom: 14,
   };
 
   const placemarks = [

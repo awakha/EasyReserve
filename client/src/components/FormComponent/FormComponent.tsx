@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
+import style from "./FormComponent.module.css";
 
 export const FormComponent = () => {
   const form = useRef();
@@ -28,17 +29,17 @@ export const FormComponent = () => {
   };
 
   return (
-    <form ref={form} onSubmit={sendEmail}>
+    <form ref={form} onSubmit={sendEmail} className={style.form}>
       <label>Имя</label>
       <input type="text" name="user_name" />
       <label>Электронная почта</label>
       <input type="email" name="user_email" />
       <label>Текст сообщения</label>
       <textarea name="message" />
-      <input type="submit" value="Send" />
+      <input type="submit" value="Отправить" />
 
       {isSubmitted && (
-        <div>
+        <div className={style.messageContainer}>
           <p>Сообщение отправлено!</p>
           <button onClick={() => setIsSubmitted(false)}>Закрыть</button>
         </div>
