@@ -24,19 +24,19 @@ export const Header: FC = () => {
 
       <div className={styles.link_group}>
         <Link to={'/'}>
-          <h2 className={styles.brand_name}>Home</h2>
+          <h2 className={styles.brand_name}>Главная</h2>
         </Link>
         <Link to={'/restaurants'}>
-          <h2 className={styles.brand_name}>Restaurants</h2>
+          <h2 className={styles.brand_name}>Рестораны</h2>
         </Link>
         <Link to={'/about'}>
-          <h2 className={styles.brand_name}>About</h2>
+          <h2 className={styles.brand_name}>О нас</h2>
         </Link>
       </div>
 
       <div className={styles.profile_group}>
         <Link to={user ? '/profile' : '/register'}>
-          <h2>{user ? user?.username : 'Registration'}</h2>
+          <h2>{user ? user?.username : 'Зарегистрироваться'}</h2>
         </Link>
         <h2>|</h2>
         <Link to={'/login'}>
@@ -47,10 +47,10 @@ export const Header: FC = () => {
               size="small"
               onClick={handleLogout}
             >
-              Logout
+              Выйти
             </Button>
           ) : (
-            <h2>Login</h2>
+            <h2>Войти</h2>
           )}
         </Link>
       </div>

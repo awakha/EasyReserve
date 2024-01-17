@@ -1,0 +1,15 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stars {
+  display: flex;
+  align-self: flex-end;
+}
+
+.icon {
+  margin-right: 10;
+  cursor: pointer;
+}

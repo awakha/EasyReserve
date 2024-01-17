@@ -11,15 +11,18 @@ import { CustomLayout } from '../../Layout/CustomLayout';
 import { Like } from '../../UI/Buttons/Like';
 import { Carousel } from '../../UI/Carousel/Carousel';
 import { DatePicker } from '../../UI/DatePicker/DatePicker';
-import { Menu } from '../../UI/Menu/Menu';
+
 import { ProgressBar } from '../../UI/ProgressBar/ProgressBar';
 import { ReviewsList } from '../../UI/ReviewList/ReviewsList';
 import styles from './RestPage.module.css';
+import { Menu } from '../../UI/Menu/Menu';
+import { ReviewForm } from '../../ReviewForm/ReviewForm';
 
 export const RestPage: FC = () => {
   const { id } = useParams();
   const [rest, setRest] = useState<IRestaurant>();
   const [reviewsArr, setReviewsArr] = useState<IReview[]>([]);
+  const user = useAppSelector((state) => state.auth.user);
 
   const { isLoading, rests, reviews } = useAppSelector((state) => state.rests);
 
@@ -63,7 +66,7 @@ export const RestPage: FC = () => {
               </p>
               <p>
                 <PiMoneyLight />
-                avg price: $56
+                средний чек: $56
               </p>
             </div>
             <div className={styles.additional_info}>
@@ -72,9 +75,7 @@ export const RestPage: FC = () => {
                   <span>{Number(rest?.avgScore).toFixed(2)}</span>
                   <span>/10</span>
                 </>
-              ) : (
-                <span>No rating</span>
-              )}
+              ) : null}
 
               <p>
                 <FaRegCommentDots />
@@ -83,32 +84,29 @@ export const RestPage: FC = () => {
             </div>
           </div>
 
-          <div className={styles.btn_group}>
-            <a href="#description" className={styles.button}>
-              About
-            </a>
-            <a href="#menu" className={styles.button}>
-              Menu
-            </a>
-            <a href="#reviews" className={styles.button}>
-              Reviews
-            </a>
-          </div>
-
           <div className={styles.option_info}>
+            <p className={styles.button}>Описание</p>
             <div className={styles.description} id="description">
               {rest?.description}
             </div>
 
-            {rest?.Dishes ? <Menu menu={rest?.Dishes} /> : <span>No menu</span>}
+            <p className={styles.button}>Меню</p>
+            {rest?.Dishes ? (
+              <Menu menu={rest?.Dishes} />
+            ) : (
+              <span>Нет меню</span>
+            )}
 
+            <p className={styles.button}>Отзывы</p>
             <div className={styles.reviews} id="reviews">
-              <ProgressBar avgScore={rest?.avgScore} />
+              {/* <ProgressBar avgScore={rest?.avgScore} /> */}
               {reviewsArr ? (
                 <ReviewsList reviews={reviewsArr} />
               ) : (
-                <span>No reviews</span>
+                <span>Отзывов пока нет</span>
               )}
+
+              {user ? <ReviewForm restId={rest?.id} /> : null}
             </div>
           </div>
         </div>

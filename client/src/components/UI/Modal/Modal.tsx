@@ -5,6 +5,7 @@ import { ReservationData } from '../../../types/Types';
 import authorizedAxiosInstance from '../../../http';
 import { useNavigate } from 'react-router-dom';
 import styles from './Modal.module.css';
+import { InfoModal } from './InfoModal';
 
 interface IModalProps {
   data: ReservationData;
@@ -14,9 +15,14 @@ export const ModalComponent: FC<IModalProps> = ({ data }) => {
   const [modal, setModal] = Modal.useModal();
   const navigate = useNavigate();
 
-  const bookingHandler = async (): Promise<void> => {
+  const bookingHandler = async () => {
     try {
       const response = await authorizedAxiosInstance.post(`/booking`, data);
+      if (response.status === 200) {
+        return <InfoModal option={'success'} data={response.data} />;
+      } else {
+        return <InfoModal option={'error'} />;
+      }
     } catch (err) {
       console.log(err.message);
     }

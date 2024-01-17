@@ -1,35 +1,24 @@
-import { Skeleton, List } from 'antd';
+import { List } from 'antd';
+import VirtualList from 'rc-virtual-list';
 import { FC } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import { IDish } from '../../../types/Types';
-
-import styles from './Menu.module.css';
 
 interface IMenuProps {
   restId?: number;
   menu: IDish[];
 }
 
-export const Menu: FC<IMenuProps> = ({ menu, restId }) => {
+export const Menu: FC<IMenuProps> = ({ restId, menu }) => {
   return (
-    <div className={styles.scrollableDiv} id="menu">
-      <InfiniteScroll
-        dataLength={menu.length}
-        // next={loadMoreData}
-        // hasMore={menu.length < 50}
-        loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
-        scrollableTarget="scrollableDiv"
-      >
-        <List
-          dataSource={menu}
-          renderItem={(item) => (
-            <List.Item key={item.id}>
-              <List.Item.Meta title={<p>{item.name}</p>} />
-              <div>{item.price}₽</div>
-            </List.Item>
-          )}
-        />
-      </InfiniteScroll>
-    </div>
+    <List>
+      <VirtualList data={menu} itemHeight={47} itemKey="scroll">
+        {(dish: IDish) => (
+          <List.Item key={dish.id}>
+            <List.Item.Meta title={<p>{dish.name}</p>} />
+            <div>{dish.price}₽</div>
+          </List.Item>
+        )}
+      </VirtualList>
+    </List>
   );
 };
