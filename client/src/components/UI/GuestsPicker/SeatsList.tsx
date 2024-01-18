@@ -9,13 +9,13 @@ interface ISeatsListProps {
 }
 
 export const SeatsList: FC<ISeatsListProps> = ({ setData, availableSeats }) => {
-  const [array, setArray] = useState(new Array(9).fill(null));
+  const [array, setArray] = useState(new Array(10).fill(null));
   const [name, setName] = useState('больше');
 
   const clickHandler = () => {
-    array.length === 9
+    array.length === 10
       ? [setArray(new Array(30).fill(null)), setName('меньше')]
-      : [setArray(new Array(9).fill(null)), setName('больше')];
+      : [setArray(new Array(10).fill(null)), setName('больше')];
   };
 
   return (

@@ -90,7 +90,7 @@ export const DatePicker: FC<IDatePickerProps> = ({ restName }) => {
   return (
     <div className="pt-16">
       <div className="max-w-md px-4 mx-auto sm:px-7 md:max-w-4xl md:px-6">
-        <div className="ml-12 md:divide-x md:divide-gray-200 flex flex-col justify-center content-center">
+        <div className="ml-12 flex flex-col justify-center content-center">
           <div className="md:pr-14">
             <div className="flex items-center">
               <h2 className="flex-auto font-semibold text-gray-900">
