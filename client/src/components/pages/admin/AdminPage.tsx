@@ -135,6 +135,7 @@ export default function AdminPage() {
           <Link to={`/restaurants/${rest.id}`}>
             <RestaurantItem
               rest={rest}
+              isAdmin={true}
               delete={deleteHandler}
               update={UpdateRestForm}
             ></RestaurantItem>

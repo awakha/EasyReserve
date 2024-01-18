@@ -5,11 +5,12 @@ import { IRestaurant } from '../../../types/Types';
 
 interface IRestItemProps {
   rest: IRestaurant;
+  isAdmin: boolean;
 }
-export const RestaurantItem: FC<IRestItemProps> = ({ rest }) => {
+export const RestaurantItem: FC<IRestItemProps> = ({ rest, isAdmin }) => {
   return (
     <div className={styles.card}>
-      <img className={styles.img} alt="example" src={`${rest.images[0]}`} />
+      {!isAdmin && <img className={styles.img} alt="example" src={`${rest.images[0]}`} />}
       <div className={styles.info}>
         <span>{rest.cuisine}</span>
         <div className={styles.info_container}>

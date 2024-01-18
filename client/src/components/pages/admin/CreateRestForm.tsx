@@ -38,9 +38,9 @@ export default function CreateRestForm({ setRestaurant }) {
       formData.append('cityId', data.cityId);
       formData.append('timetableId', data.timetableId);
 
-      for (let i = 0; i < data.images.length; i++) {
-        formData.append('images', data.images[i]);
-      }
+      // for (let i = 0; i < data.images.length; i++) {
+      //   formData.append('images', data.images[i]);
+      // }
 
       const res = await axios.post(
         "http://localhost:3000/api/admin",

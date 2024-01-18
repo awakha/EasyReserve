@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
 router.post('/', upload.array('images', 5), async (req, res) => {
   try {
     const images = req.files.map((file) => file.path);
-    const rest = await Restaurant.create({ ...req.body, images });
+    const rest = await Restaurant.create({ ...req.body });
     const restData = rest.get();
     res.json(restData);
   } catch (err) {
