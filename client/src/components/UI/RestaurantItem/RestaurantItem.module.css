@@ -17,6 +17,8 @@
 .card {
   border: 1px solid #4c4c40;
   border-radius: 10px;
+  transition: transform 0.3s ease;
+  max-width: 300px;
 }
 
 .card:hover {

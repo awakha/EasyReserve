@@ -69,3 +69,13 @@ h1 {
   font-size: 20px;
   margin-top: 15px;
 }
+
+.main {
+  display: flex;
+  padding: 10px;
+}
+
+.calendar {
+  margin-left: 40px;
+}
+

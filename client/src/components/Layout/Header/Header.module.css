@@ -2,7 +2,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #f0ebe4;
+  background-color: white;
+  width: 100%;
+  padding: 0 20px;
 }
 
 .link_group,
@@ -19,4 +21,12 @@
 .icon {
   font-size: 25px;
   padding-top: 20px;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
 }

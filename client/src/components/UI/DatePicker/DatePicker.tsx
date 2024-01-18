@@ -11,38 +11,43 @@ import {
   parse,
   parseISO,
   startOfToday,
-} from 'date-fns';
-import { FC, useEffect, useState } from 'react';
-import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi2';
-import { useParams } from 'react-router-dom';
-
+} from "date-fns";
+import { FC, useEffect, useState } from "react";
+import { HiOutlineChevronLeft, HiOutlineChevronRight } from "react-icons/hi2";
+import { useParams } from "react-router-dom";
 import client from '../../../http/client';
 import { useAppSelector } from '../../../store/hooks';
 import { Schedule } from '../../../types/Types';
 import { OptionsMenu } from '../OptionsMenu/OptionsMenu';
+import {
+  IAvailableDateTimes,
+  IReservation,
+  Schedule,
+} from "../../../types/Types";
+
 
 interface IDatePickerProps {
   restName: string;
 }
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
+  return classes.filter(Boolean).join(" ");
 }
 
 export const DatePicker: FC<IDatePickerProps> = ({ restName }) => {
   const { id } = useParams();
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
-  const [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'));
+  const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   const [schedule, setSchedule] = useState<Schedule[]>();
-  const firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date());
-  const [param, setParam] = useState({ status: false, menu: 'slots' });
+  const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
+  const [param, setParam] = useState({ status: false, menu: "slots" });
   const user = useAppSelector((state) => state.auth.user);
 
   const [data, setData] = useState({
     restaurant: restName,
-    date: '',
-    startTime: '',
+    date: "",
+    startTime: "",
     guestsCount: 0,
     restId: Number(id),
     userId: user?.id,
@@ -55,17 +60,17 @@ export const DatePicker: FC<IDatePickerProps> = ({ restName }) => {
 
   function previousMonth() {
     const firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
-    setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'));
+    setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
   }
 
   function nextMonth() {
     const firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
-    setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'));
+    setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
   }
 
   const selectHandler = (day: Date) => {
     setSelectedDay(day);
-    setData((prev) => ({ ...prev, date: format(selectedDay, 'yyyy-MM-dd') }));
+    setData((prev) => ({ ...prev, date: format(selectedDay, "yyyy-MM-dd") }));
     setParam((prev) => ({ ...prev, status: true }));
   };
 
@@ -76,7 +81,7 @@ export const DatePicker: FC<IDatePickerProps> = ({ restName }) => {
   const fetchData = async (): Promise<void> => {
     try {
       const response = await client.get(
-        `/restaurants/schedule/${id}/${format(today, 'yyyy-MM-dd')}`
+        `/restaurants/schedule/${id}/${format(today, "yyyy-MM-dd")}`
       );
       setSchedule(response.data);
     } catch (error) {
@@ -95,7 +100,7 @@ export const DatePicker: FC<IDatePickerProps> = ({ restName }) => {
           <div className="md:pr-14">
             <div className="flex items-center">
               <h2 className="flex-auto font-semibold text-gray-900">
-                {format(firstDayCurrentMonth, 'MMMM yyyy')}
+                {format(firstDayCurrentMonth, "MMMM yyyy")}
               </h2>
               <button
                 type="button"
@@ -129,7 +134,7 @@ export const DatePicker: FC<IDatePickerProps> = ({ restName }) => {
                   key={day.toString()}
                   className={classNames(
                     dayIdx === 0 && colStartClasses[getDay(day)],
-                    'py-1.5'
+                    "py-1.5"
                   )}
                 >
                   <button
@@ -137,33 +142,33 @@ export const DatePicker: FC<IDatePickerProps> = ({ restName }) => {
                     onClick={() => selectHandler(day)}
                     disabled={day < today ? true : false}
                     className={classNames(
-                      day < today && 'disabled:opacity-50',
-                      isEqual(day, selectedDay) && 'text-white',
+                      day < today && "disabled:opacity-50",
+                      isEqual(day, selectedDay) && "text-white",
                       !isEqual(day, selectedDay) &&
                         isToday(day) &&
-                        'text-red-500',
+                        "text-red-500",
                       !isEqual(day, selectedDay) &&
                         !isToday(day) &&
                         isSameMonth(day, firstDayCurrentMonth) &&
-                        'text-gray-900',
+                        "text-gray-900",
                       !isEqual(day, selectedDay) &&
                         !isToday(day) &&
                         !isSameMonth(day, firstDayCurrentMonth) &&
-                        'text-gray-400',
+                        "text-gray-400",
                       isEqual(day, selectedDay) &&
                         isToday(day) &&
-                        'bg-[#ee873c]',
+                        "bg-[#ee873c]",
                       isEqual(day, selectedDay) &&
                         !isToday(day) &&
-                        'bg-[#ee873c]',
-                      !isEqual(day, selectedDay) && 'hover:bg-gray-200',
+                        "bg-[#ee873c]",
+                      !isEqual(day, selectedDay) && "hover:bg-gray-200",
                       (isEqual(day, selectedDay) || isToday(day)) &&
-                        'font-semibold',
-                      'mx-auto flex h-8 w-8 items-center justify-center rounded-full'
+                        "font-semibold",
+                      "mx-auto flex h-8 w-8 items-center justify-center rounded-full"
                     )}
                   >
-                    <time dateTime={format(day, 'yyyy-MM-dd')}>
-                      {format(day, 'd')}
+                    <time dateTime={format(day, "yyyy-MM-dd")}>
+                      {format(day, "d")}
                     </time>
                   </button>
                 </div>
@@ -177,6 +182,7 @@ export const DatePicker: FC<IDatePickerProps> = ({ restName }) => {
             selectedDaySchedule={selectedDaySchedule}
             setParam={setParam}
             setData={setData}
+            className="ml-4"
           ></OptionsMenu>
         </div>
       </div>
@@ -185,11 +191,11 @@ export const DatePicker: FC<IDatePickerProps> = ({ restName }) => {
 };
 
 const colStartClasses = [
-  '',
-  'col-start-2',
-  'col-start-3',
-  'col-start-4',
-  'col-start-5',
-  'col-start-6',
-  'col-start-7',
+  "",
+  "col-start-2",
+  "col-start-3",
+  "col-start-4",
+  "col-start-5",
+  "col-start-6",
+  "col-start-7",
 ];

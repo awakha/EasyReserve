@@ -1,7 +1,9 @@
-import { useState, useRef } from 'react';
-import styles from './CreateAdminForm.module.css';
-import axios from 'axios';
-import client from '../../../http/client';
+import React, { useState, useRef } from "react";
+import { Select, Button } from "antd";
+import styles from "./CreateAdminForm.module.css";
+import axios from "axios";
+
+const { Option } = Select;
 
 export default function CreateRestForm({ setRestaurant }) {
   const [data, setData] = useState({
@@ -41,11 +43,11 @@ export default function CreateRestForm({ setRestaurant }) {
       }
 
       const res = await axios.post(
-        'http://localhost:3000/api/admin',
+        "http://localhost:3000/api/admin",
         formData,
         {
           headers: {
-            'Content-Type': 'multipart/form-data',
+            "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -95,6 +97,7 @@ export default function CreateRestForm({ setRestaurant }) {
         value={data.description}
         className={styles.inputField}
       />
+
       <input
         placeholder="Address"
         onChange={chengeHandler}
@@ -103,6 +106,7 @@ export default function CreateRestForm({ setRestaurant }) {
         value={data.address}
         className={styles.inputField}
       />
+
       <input
         type="file"
         accept="image/*"
@@ -111,38 +115,53 @@ export default function CreateRestForm({ setRestaurant }) {
         className={styles.inputField}
         multiple
       />
-      <input
-        placeholder="CuisineId"
-        onChange={chengeHandler}
-        type="text"
-        name="cuisineId"
-        value={data.cuisineId}
-        className={styles.inputField}
-      />
-      <input
-        placeholder="CityId"
-        onChange={chengeHandler}
-        type="text"
-        name="cityId"
-        value={data.cityId}
-        className={styles.inputField}
-      />
-      <input
-        placeholder="TimetableId"
-        onChange={chengeHandler}
-        type="text"
-        name="timetableId"
-        value={data.timetableId}
-        className={styles.inputField}
-      />
 
-      <button
+      <Select
+        placeholder="CuisineId"
+        onChange={(value) => setData((prev) => ({ ...prev, cuisineId: value }))}
+        value={data.cuisineId}
+        className={styles.selectField}
+      >
+        <Option value="1">Русская кухня</Option>
+        <Option value="5">Международная кухня</Option>
+      </Select>
+
+      <Select
+        placeholder="CityId"
+        onChange={(value) => setData((prev) => ({ ...prev, cityId: value }))}
+        value={data.cityId}
+        className={styles.selectField}
+      >
+        <Option value="1">Москва</Option>
+        <Option value="2">Санкт-Петербург</Option>
+        <Option value="3">Сочи</Option>
+        <Option value="4">Милан</Option>
+        <Option value="5">Рома</Option>
+        <Option value="6">Флоренция</Option>
+        <Option value="7">Париж</Option>
+        <Option value="8">Страсбург</Option>
+        <Option value="9">Перпиньян</Option>
+      </Select>
+
+      <Select
+        placeholder="TimetableId"
+        onChange={(value) =>
+          setData((prev) => ({ ...prev, timetableId: value }))
+        }
+        value={data.timetableId}
+        className={styles.selectField}
+      >
+        <Option value="1">8:00 - 22:00</Option>
+        <Option value="2">12:00 - 00:00</Option>
+      </Select>
+
+      <Button
         onClick={addHendler}
         type="button"
         className={styles.submitButton}
       >
         Tuch me, please
-      </button>
+      </Button>
     </form>
   );
 }

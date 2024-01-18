@@ -14,7 +14,6 @@ export const CustomLayout: FC<LayoutProps> = ({ children }) => {
     <div className={styles.main}>
       <Header />
       <Layout.Content>{children}</Layout.Content>
-      <Footer />
     </div>
   );
 };

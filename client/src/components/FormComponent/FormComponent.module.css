@@ -4,10 +4,6 @@ form {
   align-items: center;
   width: 900px;
   margin: 0 auto; 
-  background: linear-gradient(
-    #f5efce,
-    #f0d680
-  );
   padding: 20px;
   border-radius: 10px;
 }
@@ -25,7 +21,7 @@ textarea {
 }
 
 input[type="submit"] {
-  background-color: #afa04c;
+  background-color: #b409e7;
   color: white;
   cursor: pointer;
   width: 100px;
@@ -54,3 +50,4 @@ input[type="submit"]:hover {
 .messageContainer button:hover {
   background-color: #45a049;
 }
+
