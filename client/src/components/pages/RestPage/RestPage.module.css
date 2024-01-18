@@ -73,6 +73,7 @@ a {
 
 .main {
   display: flex;
+  padding: 10px;
 }
 
 .calendar {

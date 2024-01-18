@@ -1,0 +1,42 @@
+@keyframes moveWords {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.p2 {
+  animation: moveWords 2s infinite;
+}
+
+.hero {
+  position: relative;
+}
+
+.video {
+  /* Стили для видео */
+}
+
+.hero_text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.p1,
+.p2 {
+  font-size: 48px;
+  font-weight: bold;
+  color: white;
+}
+
+.center {
+  margin: 0;
+}

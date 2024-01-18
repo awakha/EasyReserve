@@ -36,7 +36,7 @@ export const FormComponent = () => {
       <input type="email" name="user_email" />
       <label>Текст сообщения</label>
       <textarea name="message" />
-      <input type="submit" value="Отправить" />
+      <input className={style.textareaField} type="submit" value="Отправить" />
 
       {isSubmitted && (
         <div className={style.messageContainer}>
