@@ -1,7 +1,7 @@
-const router = require("express").Router();
+const router = require('express').Router();
 const multer = require('multer');
 const path = require('path');
-const { Restaurant } = require("../../db/models");
+const { Restaurant, City, Timetable, Cuisine } = require('../../db/models');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -16,9 +16,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   try {
-
     const rests = await Restaurant.findAll({ raw: true, nest: true });
 
     res.json(rests);
@@ -27,19 +26,19 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", upload.array('images', 5), async (req, res) => {
+router.post('/', upload.array('images', 5), async (req, res) => {
   try {
-    const images = req.files.map(file => file.path);
+    const images = req.files.map((file) => file.path);
     const rest = await Restaurant.create({ ...req.body, images });
     const restData = rest.get();
     res.json(restData);
   } catch (err) {
-    console.log(err.message)
+    console.log(err.message);
     res.status(500).send('Internal Server Error');
   }
 });
 
-router.put("/", async (req, res) => {
+router.put('/', async (req, res) => {
   const { id, ...restData } = req.body;
   try {
     const rest = await Restaurant.findByPk(id);
@@ -58,7 +57,7 @@ router.put("/", async (req, res) => {
   }
 });
 
-router.delete("/", async (req, res) => {
+router.delete('/', async (req, res) => {
   const { id } = req.query;
   try {
     await Restaurant.destroy({ where: { id } });
@@ -68,5 +67,18 @@ router.delete("/", async (req, res) => {
   }
 });
 
-module.exports = router;
+router.get('/additional', async (req, res) => {
+  try {
+    const cities = await City.findAll({ attributes: ['id', 'name'] });
+    const cuisines = await Cuisine.findAll({ attributes: ['id', 'name'] });
+    const timetables = await Timetable.findAll({
+      attributes: ['id', 'openTime'],
+    });
 
+    res.json({ cities, cuisines, timetables });
+  } catch (error) {
+    res.json({ status: 500, message: error.message });
+  }
+});
+
+module.exports = router;
