@@ -14,7 +14,7 @@ export const RestaurantItem: FC<IRestItemProps> = ({ rest }) => {
         <span>{rest.cuisine}</span>
         <div className={styles.info_container}>
           <h2>{rest.name}</h2>
-          <p>{Number(rest.avgScore).toFixed(2)}/10</p>
+          {rest.avgScore ? <p>{Number(rest.avgScore).toFixed(2)}/5</p> : null}
         </div>
       </div>
     </div>

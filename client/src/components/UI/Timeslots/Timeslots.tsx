@@ -1,8 +1,8 @@
-import { FC } from 'react';
 import { Button } from 'antd';
+import { FC } from 'react';
 
+import { Schedule } from '../../../types/Types';
 import styles from './Timeslots.module.css';
-import { ReservationData, Schedule } from '../../../types/Types';
 
 interface ITimeslots {
   selectedDaySchedule: Schedule;

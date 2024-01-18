@@ -1,17 +1,12 @@
 .form {
-  width: 80%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   gap: 15px;
 }
 
 .add_btn {
   align-self: flex-end;
-}
-
-.scrollDiv {
-  height: auto;
 }
 
 .main {

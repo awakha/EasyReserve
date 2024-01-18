@@ -5,6 +5,7 @@ import { getRestaurants } from '../../../store/thunkActions';
 import { CustomLayout } from '../../Layout/CustomLayout';
 import { Loader } from '../../UI/Loader/Loader';
 
+import { FaTelegram } from 'react-icons/fa6';
 import client from '../../../http/client';
 import { RecommendContainer } from '../../UI/RecommendContainer/RecommendContainer';
 import styles from './Homepage.module.css';
@@ -17,7 +18,6 @@ export const Homepage: FC = () => {
   const fetchData = async () => {
     try {
       const response = await client.get('/restaurants/main');
-
       setData(response.data.data);
       setCuisines(response.data.cuisine);
     } catch (error) {
@@ -36,25 +36,31 @@ export const Homepage: FC = () => {
 
   return (
     <CustomLayout>
-      <img
-        src="../../../public/home_img.jpg"
-        alt="img"
-        className={styles.home_img}
-      />
-      <div className={styles.tg_link}>
-        <p>
-          Если хочешь посетить любимый ресторан в ближайшие 3 дня можешь
-          воспользоваться нашим ботом помощником
-        </p>
-        <a href="">LINK HERE</a>
-      </div>
-      {cuisines.map((cuisine) => (
-        <RecommendContainer
-          cuisine={cuisine}
-          restaurants={data[cuisine]}
-          key={`${cuisine}-${data[cuisine].length}`}
+      <div className={styles.main}>
+        <img
+          src="../../../public/home_img.jpg"
+          alt="img"
+          className={styles.home_img}
         />
-      ))}
+
+        <div className={styles.tg_link}>
+          <p>
+            Если хочешь посетить любимый ресторан в ближайшие 3 дня, можешь
+            воспользоваться нашим ботом помощником
+          </p>
+          <a href="https://t.me/EasyReserve_bot" target="_blank">
+            <FaTelegram />
+          </a>
+        </div>
+
+        {cuisines.map((cuisine) => (
+          <RecommendContainer
+            cuisine={cuisine}
+            restaurants={data[cuisine]}
+            key={`${cuisine}-${data[cuisine].length}`}
+          />
+        ))}
+      </div>
     </CustomLayout>
   );
 };

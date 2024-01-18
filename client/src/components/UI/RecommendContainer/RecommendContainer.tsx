@@ -17,9 +17,6 @@ export const RecommendContainer: FC<IProps> = ({ cuisine, restaurants }) => {
     <div className={styles.recommend_container}>
       <div className={styles.recommend_header}>
         <h2>Популярное в разделе: {cuisine}</h2>
-        <Link to={`/restaurants/${cuisine}`}>
-          <h3>посмотреть еще</h3>
-        </Link>
       </div>
       <div className={styles.rests_container}>
         {rests.map((rest) => (

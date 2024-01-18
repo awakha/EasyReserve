@@ -2,16 +2,17 @@
   margin: 50px 0px;
 }
 
-.info {
-  padding: 20px;
-  width: 65%;
-  height: 100%;
-  border: 2px solid black;
-  border-radius: 20px;
+.main {
+  display: flex;
 }
 
-.icon {
-  font-size: 20px;
+.info {
+  padding: 20px;
+  height: auto;
+  border: 2px solid black;
+  border-radius: 20px;
+  width: 65%;
+  padding-bottom: 50px;
 }
 
 .cuisine {
@@ -26,19 +27,13 @@
   justify-content: space-between;
 }
 
-a,
-a:hover {
-  color: #22222f;
-}
-
 h1 {
   margin: 15px 0px;
   font-size: 35px;
 }
 
 .main_info > p,
-.additional_info > p,
-a {
+.additional_info > p {
   margin: 10px 0px;
   display: flex;
   gap: 10px;
@@ -49,13 +44,9 @@ a {
   font-size: 25px;
 }
 
-.btn_group {
-  margin-top: 30px;
-  display: flex;
-  gap: 20px;
-}
-.button {
+.menu_group {
   font-size: 25px;
+  margin: 30px 0px;
 }
 
 .description {
@@ -64,9 +55,17 @@ a {
   text-align: center;
 }
 
-.reviews {
+.calendar {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 50px;
+  justify-content: start;
+  align-items: center;
+  position: sticky;
+  align-self: self-start;
+  top: 15px;
+}
+
+.calendar > p {
+  font-size: 20px;
+  margin-top: 15px;
 }

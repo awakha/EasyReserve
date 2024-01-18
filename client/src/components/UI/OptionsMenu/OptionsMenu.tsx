@@ -39,32 +39,30 @@ export const OptionsMenu: FC<IOptionMenuProps> = ({
     }
   };
 
+  //style={{ visibility: param.status ? 'visible' : 'hidden' }}
   return (
-    <section
-      className="mt-12 md:mt-0 md:pl-14"
-      style={{ visibility: param.status ? 'visible' : 'hidden' }}
-    >
+    <section style={{ visibility: param.status ? 'visible' : 'hidden' }}>
       <div className={styles.btn_group}>
         <h2 className="font-semibold text-gray-900">
-          {param.menu === 'slots' ? 'Available Time Slots' : 'Number Of Guests'}
+          {param.menu === 'slots' ? 'Время' : 'Количество гостей'}
         </h2>
         <button
           type="button"
           onClick={back}
-          className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
+          className="flex flex-none items-center justify-center text-gray-400 hover:text-gray-500"
         >
           <HiOutlineChevronLeft className="w-5 h-5" aria-hidden="true" />
         </button>
         <button
           onClick={forward}
           type="button"
-          className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
+          className="flex flex-none items-center justify-center text-gray-400 hover:text-gray-500"
         >
           <HiOutlineChevronRight className="w-5 h-5" aria-hidden="true" />
         </button>
       </div>
 
-      <ol>
+      <ol className={styles.seats}>
         {(() => {
           switch (param.menu) {
             case 'slots':
@@ -79,7 +77,7 @@ export const OptionsMenu: FC<IOptionMenuProps> = ({
                   />
                 ))
               ) : (
-                <p>No schedule or available time</p>
+                <p>Нет расписания</p>
               );
             case 'seats':
               return (

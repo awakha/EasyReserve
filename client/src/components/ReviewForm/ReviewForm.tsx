@@ -1,26 +1,28 @@
-import { Button, Flex, Input } from 'antd';
+import { Button } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { FC, useState } from 'react';
 
-import styles from './ReviewForm.module.css';
-import { StarsRating } from '../UI/StarsRating/StarsRating';
 import { FaStar } from 'react-icons/fa6';
-import { useAppSelector } from '../../store/hooks';
+import authorizedAxiosInstance from '../../http';
+import styles from './ReviewForm.module.css';
 
 const colors = {
   orange: '#ee873c',
   grey: '#a9a9a9',
 };
 
-export const ReviewForm: FC = ({ restId }) => {
-  const [currentValue, setCurrentValue] = useState(0);
+interface ReviewFormProps {
+  restId: string;
+  setReviewsArr: () => void;
+}
+
+export const ReviewForm: FC<ReviewFormProps> = ({ restId, setReviewsArr }) => {
+  const [currentValue, setCurrentValue] = useState<number>(0);
   const [hoverValue, setHoverValue] = useState<number | undefined>(undefined);
-  const user = useAppSelector((state) => state.auth.user);
-  const stars = Array(10).fill(0);
+  const stars = Array(5).fill(0);
   const [data, setData] = useState({
     score: currentValue,
     text: '',
-    userId: user?.id,
     restId: restId,
   });
 
@@ -43,7 +45,22 @@ export const ReviewForm: FC = ({ restId }) => {
     setHoverValue(undefined);
   };
 
-  const createReview = async () => {};
+  const createReview = async () => {
+    try {
+      const response = await authorizedAxiosInstance.post('/profile', data);
+      if (response.status === 200) {
+        setReviewsArr((prev) => [...prev, response.data]);
+        setData({
+          score: currentValue,
+          text: '',
+          restId: restId,
+        });
+        setCurrentValue(0);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   return (
     <div className={styles.form}>
@@ -71,6 +88,8 @@ export const ReviewForm: FC = ({ restId }) => {
       <TextArea
         onChange={onChange}
         placeholder="Начните писать свой отзыв..."
+        value={data.text}
+        className={styles.text_area}
       />
       <Button type="text" className={styles.add_btn} onClick={createReview}>
         Добавить
