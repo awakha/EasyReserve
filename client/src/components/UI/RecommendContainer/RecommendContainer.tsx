@@ -11,7 +11,7 @@ interface IProps {
 }
 
 export const RecommendContainer: FC<IProps> = ({ cuisine, restaurants }) => {
-  const [rests, setRests] = useState(restaurants.splice(0, 4));
+  const rests = restaurants.slice(0, 5);
 
   return (
     <div className={styles.recommend_container}>
@@ -20,8 +20,8 @@ export const RecommendContainer: FC<IProps> = ({ cuisine, restaurants }) => {
       </div>
       <div className={styles.rests_container}>
         {rests.map((rest) => (
-          <Link to={`restaurants/${rest.id}`}>
-            <RestaurantItem rest={rest} key={rest.id} />
+          <Link to={`restaurants/${rest.id}`} key={rest.id}>
+            <RestaurantItem rest={rest} />
           </Link>
         ))}
       </div>

@@ -9,10 +9,17 @@
   align-items: center;
   justify-content: space-between;
   font-size: 20px;
+  margin-bottom: 10px; 
 }
 
 .rests_container {
   display: flex;
-  gap: 15px;
-  justify-content: space-between;
+  gap: 30px;
+  justify-content: flex-start; 
+}
+
+
+.RestaurantItem {
+  width: 400px; 
+  height: 250px; 
 }

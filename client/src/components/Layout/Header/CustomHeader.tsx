@@ -19,7 +19,7 @@ export const Header: FC = () => {
   return (
     <Layout.Header className={`${styles.header} ${styles.sticky}`}>
       <Link to={'/'}>
-        <h1 className={styles.brand_name}>EasyReserve</h1>
+        <h1 className={styles.brand}>EasyReserve</h1>
       </Link>
 
       <div className={styles.link_group}>
