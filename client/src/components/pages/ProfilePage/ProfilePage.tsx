@@ -47,7 +47,9 @@ const ProfilePage: React.FC = () => {
         </video>
         <div className={style.overlay}></div>
         <div className={style.profile}>
-          <h2 className={style.title}>Профиль пользователя, {user?.username}</h2>
+          <h2 className={style.title}>
+            Профиль пользователя, {user?.username}
+          </h2>
           {reservation ? (
             reservation.map((reserv) => (
               <div key={reserv.id} className={style.reservationContainer}>

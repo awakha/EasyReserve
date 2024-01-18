@@ -44,7 +44,7 @@
 
 .videoContainer {
   position: relative;
-  padding-bottom: 29%;
+  height: 100vh;
 }
 
 .video {
