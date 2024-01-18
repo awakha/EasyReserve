@@ -3,6 +3,9 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  border: 1px solid #22222f;
+  padding: 20px;
+  border-radius: 20px;
 }
 
 .btn_group {
@@ -57,3 +60,11 @@
   color: white;
 }
 
+.rests {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}

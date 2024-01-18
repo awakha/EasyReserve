@@ -1,11 +1,14 @@
-import React, { useState, useRef } from "react";
-import { Select, Button } from "antd";
-import styles from "./CreateAdminForm.module.css";
-import axios from "axios";
+import { Button, Select } from 'antd';
+import axios from 'axios';
+import { useRef, useState } from 'react';
+import styles from './CreateAdminForm.module.css';
 
 const { Option } = Select;
 
-export default function CreateRestForm({ setRestaurant }) {
+export default function CreateRestForm({
+  setRestaurant,
+  handleCloseCreateForm,
+}) {
   const [data, setData] = useState({
     name: '',
     description: '',
@@ -38,16 +41,15 @@ export default function CreateRestForm({ setRestaurant }) {
       formData.append('cityId', data.cityId);
       formData.append('timetableId', data.timetableId);
 
-      // for (let i = 0; i < data.images.length; i++) {
-      //   formData.append('images', data.images[i]);
-      // }
-
+      for (let i = 0; i < data.images.length; i++) {
+        formData.append('images', data.images[i]);
+      }
       const res = await axios.post(
-        "http://localhost:3000/api/admin",
+        'http://localhost:3000/api/admin',
         formData,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
           },
         }
       );
@@ -64,20 +66,13 @@ export default function CreateRestForm({ setRestaurant }) {
           timetableId: '',
         });
         fileInputRef.current.value = '';
+        handleCloseCreateForm();
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  // const fetchData = async () => {
-  //   try {
-  //     const response = await client.get('/admin/additional');
-
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
   return (
     <form className={styles.createRestForm}>
       <input

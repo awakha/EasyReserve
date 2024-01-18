@@ -5,12 +5,24 @@ import { IRestaurant } from '../../../types/Types';
 
 interface IRestItemProps {
   rest: IRestaurant;
-  isAdmin: boolean;
 }
-export const RestaurantItem: FC<IRestItemProps> = ({ rest, isAdmin }) => {
+
+const regex = new RegExp('https');
+
+export const RestaurantItem: FC<IRestItemProps> = ({ rest }) => {
+  console.log(regex.test(rest.images[0]));
+
   return (
     <div className={styles.card}>
-      {!isAdmin && <img className={styles.img} alt="example" src={`${rest.images[0]}`} />}
+      <img
+        className={styles.img}
+        alt="example"
+        src={
+          regex.test(rest.images[0])
+            ? `${rest.images[0]}`
+            : `/${rest.images[0]}`
+        }
+      />
       <div className={styles.info}>
         <span>{rest.cuisine}</span>
         <div className={styles.info_container}>
