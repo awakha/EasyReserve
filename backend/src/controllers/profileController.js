@@ -1,4 +1,8 @@
-const { Reservation, Restaurant, Review } = require('../../db/models');
+const { Reservation, Restaurant, Review, User } = require('../../db/models');
+
+const { Op } = require('sequelize');
+const today = new Date();
+today.setHours(0, 0, 0, 0);
 
 exports.getReservations = async (req, res) => {
   try {
@@ -9,6 +13,26 @@ exports.getReservations = async (req, res) => {
       include: [{ model: Restaurant, attributes: ['name'] }],
     });
     console.log(data);
+    res.json(data);
+  } catch (error) {
+    res.sendStatus(401);
+  }
+};
+
+exports.getReservationsByAdmin = async (req, res) => {
+  try {
+    const data = await Reservation.findAll({
+      raw: true,
+      where: {
+        date: {
+          [Op.gte]: today,
+        },
+      },
+      include: [
+        { model: Restaurant, attributes: ['name'] },
+        { model: User, attributes: ['username'] },
+      ],
+    });
     res.json(data);
   } catch (error) {
     res.sendStatus(401);

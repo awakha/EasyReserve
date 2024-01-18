@@ -10,14 +10,17 @@ import { Error } from '../Error/Error';
 import { RestaurantItem } from '../../UI/RestaurantItem/RestaurantItem';
 import { Button } from 'antd';
 import { Link } from 'react-router-dom';
+import authorizedAxiosInstance from '../../../http';
 
 export default function AdminPage() {
   const user = useSelector(selectUser);
+
 
   const [restaurant, setRestaurant] = useState([]);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
+  const [reservation, setReservation] = useState([]);
 
   useEffect(() => {
     if (user && user.isAdmin) {
@@ -32,10 +35,31 @@ export default function AdminPage() {
     }
   }, [user]);
 
+  useEffect(() => {
+    authorizedAxiosInstance
+      .get(`http://localhost:3000/api/profile/admin`)
+      .then((res) => {
+        setReservation(res.data);
+      })
+      .catch((e) => console.log(e));
+  }, []);
+
   if (!user || !user.isAdmin) {
     return <Error />;
   }
 
+  const cancelReservation = async (reservationId) => {
+    try {
+      await authorizedAxiosInstance.delete(
+        `http://localhost:3000/api/profile/${reservationId}`
+      );
+      setReservation((prevReservation) =>
+        prevReservation.filter((reserv) => reserv.id !== reservationId)
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleAddRestClick = () => {
     setShowCreateForm(true);
   };
@@ -72,7 +96,27 @@ export default function AdminPage() {
       <Button onClick={handleAddRestClick} className={style.btn__add__rest}>
         Добавить ресторан
       </Button>
-
+      {reservation ? (
+            reservation.map((reserv) => (
+              <div key={reserv.id} className={style.reservationContainer}>
+                <h3>забронированный ресторан: {reserv["User.username"]}</h3>
+                <div className={style.reservationInfo}>
+                  <p>Ресторан: {reserv["Restaurant.name"]}</p>
+                  <p>Дата: {reserv.date}</p>
+                  <p>Время: {reserv.startTime}</p>
+                  <p>Количество гостей: {reserv.guestsCount}</p>
+                </div>
+                <button
+                  className={style.cancelButton}
+                  onClick={() => cancelReservation(reserv.id)}
+                >
+                  Отменить бронирование
+                </button>
+              </div>
+            ))
+          ) : (
+            <p>Нет забронированных ресторанов</p>
+          )}
       {showCreateForm && (
         <CreateRestForm
           setRestaurant={setRestaurant}
