@@ -1,4 +1,3 @@
-import axios from "axios";
 import {
   add,
   eachDayOfInterval,
@@ -16,26 +15,26 @@ import {
 import { FC, useEffect, useState } from "react";
 import { HiOutlineChevronLeft, HiOutlineChevronRight } from "react-icons/hi2";
 import { useParams } from "react-router-dom";
-
-import { useAppSelector } from "../../../store/hooks";
+import client from '../../../http/client';
+import { useAppSelector } from '../../../store/hooks';
+import { Schedule } from '../../../types/Types';
+import { OptionsMenu } from '../OptionsMenu/OptionsMenu';
 import {
   IAvailableDateTimes,
   IReservation,
   Schedule,
 } from "../../../types/Types";
-import { OptionsMenu } from "../OptionsMenu/OptionsMenu";
-import client from "../../../http/client";
+
 
 interface IDatePickerProps {
-  schedule: IAvailableDateTimes[];
-  reservations: IReservation[];
+  restName: string;
 }
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export const DatePicker: FC = ({ restName }) => {
+export const DatePicker: FC<IDatePickerProps> = ({ restName }) => {
   const { id } = useParams();
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
@@ -97,7 +96,7 @@ export const DatePicker: FC = ({ restName }) => {
   return (
     <div className="pt-16">
       <div className="max-w-md px-4 mx-auto sm:px-7 md:max-w-4xl md:px-6">
-        <div className=" md:divide-x md:divide-gray-200">
+        <div className="ml-12 md:divide-x md:divide-gray-200 flex flex-col justify-center content-center">
           <div className="md:pr-14">
             <div className="flex items-center">
               <h2 className="flex-auto font-semibold text-gray-900">

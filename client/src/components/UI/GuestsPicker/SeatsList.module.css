@@ -1,19 +1,9 @@
 .seats {
+  width: auto;
   display: flex;
-  justify-content: space-between;
-  margin-top: 5px;
-  flex-direction: column;
-  gap: 20px;
-}
-.btn_group {
-  display: flex;
-  gap: 10px;
   flex-wrap: wrap;
-}
-
-.button {
-  width: 60px;
-  margin-bottom: 10px;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .options {

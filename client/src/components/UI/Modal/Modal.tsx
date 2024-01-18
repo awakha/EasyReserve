@@ -1,11 +1,10 @@
 import { Button, Modal, Space } from 'antd';
 import { FC } from 'react';
 
-import { ReservationData } from '../../../types/Types';
-import authorizedAxiosInstance from '../../../http';
 import { useNavigate } from 'react-router-dom';
+import authorizedAxiosInstance from '../../../http';
+import { ReservationData } from '../../../types/Types';
 import styles from './Modal.module.css';
-import { InfoModal } from './InfoModal';
 
 interface IModalProps {
   data: ReservationData;
@@ -19,9 +18,7 @@ export const ModalComponent: FC<IModalProps> = ({ data }) => {
     try {
       const response = await authorizedAxiosInstance.post(`/booking`, data);
       if (response.status === 200) {
-        return <InfoModal option={'success'} data={response.data} />;
-      } else {
-        return <InfoModal option={'error'} />;
+        navigate('/profile');
       }
     } catch (err) {
       console.log(err.message);
@@ -30,29 +27,29 @@ export const ModalComponent: FC<IModalProps> = ({ data }) => {
 
   const confirm = () => {
     modal.confirm({
+      title: 'БРОНИРОВАНИЕ',
       content: (
         <>
           {data.userId ? (
-            <div className={styles.main}>
-              <div className={styles.reservation}>
-                <h2>RESERVATION</h2>
-                <h2>•</h2>
-                <h2>{data.restaurant}</h2>
-              </div>
-
-              <p>{data.date}</p>
-              <p>{data.startTime}</p>
-              <p>{data.guestsCount}</p>
-            </div>
+            <p>
+              Пожалуйста, ознакомьтесь с информацией ниже и подтвердите
+              бронирование <br />
+              Ресторан: {data.restaurant}
+              <br />
+              Дата: {data.date}
+              <br />
+              Время: {data.startTime}
+              <br />
+              Количество гостей: {data.guestsCount}
+            </p>
           ) : (
-            <h1>You have to login</h1>
+            <p>Войдите в систему или зарегистрируйтесь</p>
           )}
         </>
       ),
       onOk() {
         data.userId ? bookingHandler() : navigate('/login');
       },
-      onCancel() {},
     });
   };
 
@@ -60,7 +57,7 @@ export const ModalComponent: FC<IModalProps> = ({ data }) => {
     <>
       <Space wrap>
         <Button onClick={confirm} className={styles.btn}>
-          reserve
+          зарезервировать
         </Button>
       </Space>
       {setModal}

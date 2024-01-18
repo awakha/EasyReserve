@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
-import style from "./AdminPage.module.css";
-import axios from "axios";
-import CreateRestForm from "./CreateRestForm";
-import UpdateRestForm from "./UpdateRestForm";
-import { CustomLayout } from "../../Layout/CustomLayout";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../../store/slices/authSlice";
-import { Error } from "../Error/Error";
+import React, { useEffect, useState } from 'react';
+import style from './AdminPage.module.css';
+import axios from 'axios';
+import CreateRestForm from './CreateRestForm';
+import UpdateRestForm from './UpdateRestForm';
+import { CustomLayout } from '../../Layout/CustomLayout';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../../store/slices/authSlice';
+import { Error } from '../Error/Error';
+import { RestaurantItem } from '../../UI/RestaurantItem/RestaurantItem';
+import { Button } from 'antd';
+import { Link } from 'react-router-dom';
 
 export default function AdminPage() {
   const user = useSelector(selectUser);
@@ -29,8 +32,8 @@ export default function AdminPage() {
     }
   }, [user]);
 
-  if(!user || !user.isAdmin) {
-    return <Error />
+  if (!user || !user.isAdmin) {
+    return <Error />;
   }
 
   const handleAddRestClick = () => {
@@ -66,9 +69,10 @@ export default function AdminPage() {
 
   return (
     <CustomLayout className={style.admin_page}>
-      <button onClick={handleAddRestClick} className={style.btn__add__rest}>
-        Add Rest
-      </button>
+      <Button onClick={handleAddRestClick} className={style.btn__add__rest}>
+        Добавить ресторан
+      </Button>
+
       {showCreateForm && (
         <CreateRestForm
           setRestaurant={setRestaurant}
@@ -83,21 +87,44 @@ export default function AdminPage() {
         />
       )}
       {restaurant.map((rest) => (
-        <div className={style.card__rest} key={rest.id}>
-          <p className={style.card__name}>{rest.name}</p>
-          <button
-            onClick={() => handleUpdateRestClick(rest)}
-            className={style.btn__update}
-          >
-            Update
-          </button>
-          <button
-            onClick={() => deleteHandler(rest.id)}
-            className={style.btn__delete}
-          >
-            Delete
-          </button>
+        <div className={style.main}>
+          <Link to={`/restaurants/${rest.id}`}>
+            <RestaurantItem
+              rest={rest}
+              delete={deleteHandler}
+              update={UpdateRestForm}
+            ></RestaurantItem>
+          </Link>
+          <div className={style.btn_group}>
+            <Button
+              onClick={() => handleUpdateRestClick(rest)}
+              className={style.btn__update}
+            >
+              Изменить
+            </Button>
+            <Button
+              onClick={() => deleteHandler(rest.id)}
+              className={style.btn__delete}
+            >
+              Удалить
+            </Button>
+          </div>
         </div>
+        // <div className={style.card__rest} key={rest.id}>
+        //   <p className={style.card__name}>{rest.name}</p>
+        //   <button
+        //     onClick={() => handleUpdateRestClick(rest)}
+        //     className={style.btn__update}
+        //   >
+        //     Update
+        //   </button>
+        //   <button
+        //     onClick={() => deleteHandler(rest.id)}
+        //     className={style.btn__delete}
+        //   >
+        //     Delete
+        //   </button>
+        // </div>
       ))}
     </CustomLayout>
   );

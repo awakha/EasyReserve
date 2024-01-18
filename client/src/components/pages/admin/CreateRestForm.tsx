@@ -7,13 +7,13 @@ const { Option } = Select;
 
 export default function CreateRestForm({ setRestaurant }) {
   const [data, setData] = useState({
-    name: "",
-    description: "",
-    address: "",
+    name: '',
+    description: '',
+    address: '',
     images: null,
-    cuisineId: "",
-    cityId: "",
-    timetableId: "",
+    cuisineId: '',
+    cityId: '',
+    timetableId: '',
   });
 
   const fileInputRef = useRef();
@@ -31,15 +31,15 @@ export default function CreateRestForm({ setRestaurant }) {
 
     try {
       const formData = new FormData();
-      formData.append("name", data.name);
-      formData.append("description", data.description);
-      formData.append("address", data.address);
-      formData.append("cuisineId", data.cuisineId);
-      formData.append("cityId", data.cityId);
-      formData.append("timetableId", data.timetableId);
+      formData.append('name', data.name);
+      formData.append('description', data.description);
+      formData.append('address', data.address);
+      formData.append('cuisineId', data.cuisineId);
+      formData.append('cityId', data.cityId);
+      formData.append('timetableId', data.timetableId);
 
       for (let i = 0; i < data.images.length; i++) {
-        formData.append("images", data.images[i]);
+        formData.append('images', data.images[i]);
       }
 
       const res = await axios.post(
@@ -55,21 +55,29 @@ export default function CreateRestForm({ setRestaurant }) {
       if (res.status === 200) {
         setRestaurant((prev) => [...prev, res.data]);
         setData({
-          name: "",
-          description: "",
-          address: "",
+          name: '',
+          description: '',
+          address: '',
           images: null,
-          cuisineId: "",
-          cityId: "",
-          timetableId: "",
+          cuisineId: '',
+          cityId: '',
+          timetableId: '',
         });
-        fileInputRef.current.value = "";
+        fileInputRef.current.value = '';
       }
     } catch (error) {
       console.log(error);
     }
   };
 
+  // const fetchData = async () => {
+  //   try {
+  //     const response = await client.get('/admin/additional');
+
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
   return (
     <form className={styles.createRestForm}>
       <input

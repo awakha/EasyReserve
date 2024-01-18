@@ -12,11 +12,12 @@ import { Like } from '../../UI/Buttons/Like';
 import { Carousel } from '../../UI/Carousel/Carousel';
 import { DatePicker } from '../../UI/DatePicker/DatePicker';
 
-import { ProgressBar } from '../../UI/ProgressBar/ProgressBar';
+import client from '../../../http/client';
+import { ReviewForm } from '../../ReviewForm/ReviewForm';
+import { Loader } from '../../UI/Loader/Loader';
+import { Menu } from '../../UI/Menu/Menu';
 import { ReviewsList } from '../../UI/ReviewList/ReviewsList';
 import styles from './RestPage.module.css';
-import { Menu } from '../../UI/Menu/Menu';
-import { ReviewForm } from '../../ReviewForm/ReviewForm';
 
 export const RestPage: FC = () => {
   const { id } = useParams();
@@ -24,21 +25,28 @@ export const RestPage: FC = () => {
   const [reviewsArr, setReviewsArr] = useState<IReview[]>([]);
   const user = useAppSelector((state) => state.auth.user);
 
-  const { isLoading, rests, reviews } = useAppSelector((state) => state.rests);
+  console.log(reviewsArr);
+
+  const fetchData = async () => {
+    try {
+      const response = await client.get(`/restaurants/${id}`);
+      if (response.data) {
+        setRest(response.data.rests);
+        setReviewsArr(response.data.reviews);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   useEffect(() => {
-    const rest = rests.filter((rest) => rest.id == id)[0];
-    const restReviews = reviews.filter((review) => review.restId == id);
+    fetchData();
+  }, [id]);
 
-    if (rest && restReviews.length > 0) {
-      setRest(rest);
-      setReviewsArr(restReviews);
-    }
-  }, [id, rests, reviews]);
-
-  if (isLoading) {
-    return;
+  if (!rest) {
+    return <Loader />;
   }
+
   return (
     <CustomLayout>
       <div className={styles.carousel}>
@@ -56,24 +64,25 @@ export const RestPage: FC = () => {
 
           <div className={styles.info_cards}>
             <div className={styles.main_info}>
-              <a href="#map">
+              <p href="#map">
                 <BsGeo />
                 {rest?.address}
-              </a>
+              </p>
               <p>
                 <CiForkAndKnife />
                 {rest?.Cuisine?.name}
               </p>
               <p>
                 <PiMoneyLight />
-                средний чек: $56
+                средний чек: 2500₽
               </p>
             </div>
+
             <div className={styles.additional_info}>
               {rest?.avgScore ? (
                 <>
                   <span>{Number(rest?.avgScore).toFixed(2)}</span>
-                  <span>/10</span>
+                  <span>/5</span>
                 </>
               ) : null}
 
@@ -85,32 +94,35 @@ export const RestPage: FC = () => {
           </div>
 
           <div className={styles.option_info}>
-            <p className={styles.button}>Описание</p>
+            <p className={styles.menu_group}>Описание</p>
             <div className={styles.description} id="description">
               {rest?.description}
             </div>
 
-            <p className={styles.button}>Меню</p>
+            <p className={styles.menu_group}>Меню</p>
             {rest?.Dishes ? (
               <Menu menu={rest?.Dishes} />
             ) : (
               <span>Нет меню</span>
             )}
 
-            <p className={styles.button}>Отзывы</p>
-            <div className={styles.reviews} id="reviews">
-              {/* <ProgressBar avgScore={rest?.avgScore} /> */}
+            <p className={styles.menu_group}>Отзывы</p>
+            <div id="reviews">
               {reviewsArr ? (
                 <ReviewsList reviews={reviewsArr} />
               ) : (
                 <span>Отзывов пока нет</span>
               )}
 
-              {user ? <ReviewForm restId={rest?.id} /> : null}
+              {user ? (
+                <ReviewForm restId={rest?.id} setReviewsArr={setReviewsArr} />
+              ) : null}
             </div>
           </div>
         </div>
+
         <div className={styles.calendar}>
+          <p>Зарезервируйте столик</p>
           <DatePicker restName={rest?.name} />
         </div>
       </div>

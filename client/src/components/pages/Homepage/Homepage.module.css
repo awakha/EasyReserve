@@ -1,3 +1,9 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .home_img {
   margin: 30px 0px 30px 0px;
   width: 100%;
@@ -8,11 +14,16 @@
   padding-right: 20px;
 }
 
-.recommend_header {
-  margin: 30px 20px;
+.tg_link {
+  width: 500px;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
+  align-self: center;
+  font-size: 15 px;
+  border: 1px solid #a9aa7b;
+  border-radius: 20px;
 }
 
 .rests_container {
@@ -21,13 +32,8 @@
   gap: 10px;
 }
 
-.tg_link {
-  /* width: 400px; */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-size: 20px;
+.tg_link > a {
+  font-size: 40px;
 }
 
 .bright_link {

@@ -9,18 +9,18 @@ interface ISeatsListProps {
 }
 
 export const SeatsList: FC<ISeatsListProps> = ({ setData, availableSeats }) => {
-  const [array, setArray] = useState(new Array(10).fill(null));
-  const [name, setName] = useState('more options');
+  const [array, setArray] = useState(new Array(9).fill(null));
+  const [name, setName] = useState('больше');
 
   const clickHandler = () => {
-    array.length === 10
-      ? [setArray(new Array(30).fill(null)), setName('close options')]
-      : [setArray(new Array(10).fill(null)), setName('open options')];
+    array.length === 9
+      ? [setArray(new Array(30).fill(null)), setName('меньше')]
+      : [setArray(new Array(9).fill(null)), setName('больше')];
   };
 
   return (
-    <div className={styles.seats}>
-      <div className={styles.btn_group}>
+    <>
+      <div className={styles.seats}>
         {array.map((_, i) => (
           <Button
             className={styles.button}
@@ -31,12 +31,11 @@ export const SeatsList: FC<ISeatsListProps> = ({ setData, availableSeats }) => {
           </Button>
         ))}
       </div>
-
       <div className={styles.options}>
         <Button className={styles.options_bts} onClick={clickHandler}>
           {name}
         </Button>
       </div>
-    </div>
+    </>
   );
 };

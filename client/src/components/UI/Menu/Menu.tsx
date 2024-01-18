@@ -1,20 +1,27 @@
 import { List } from 'antd';
 import VirtualList from 'rc-virtual-list';
 import { FC } from 'react';
+import { PiForkKnifeThin } from 'react-icons/pi';
 import { IDish } from '../../../types/Types';
 
 interface IMenuProps {
-  restId?: number;
   menu: IDish[];
 }
 
-export const Menu: FC<IMenuProps> = ({ restId, menu }) => {
+export const Menu: FC<IMenuProps> = ({ menu }) => {
   return (
     <List>
-      <VirtualList data={menu} itemHeight={47} itemKey="scroll">
+      <VirtualList data={menu} height={400} itemHeight={47} itemKey="scroll">
         {(dish: IDish) => (
           <List.Item key={dish.id}>
-            <List.Item.Meta title={<p>{dish.name}</p>} />
+            <List.Item.Meta
+              title={
+                <div style={{ display: 'flex' }}>
+                  <PiForkKnifeThin />
+                  <p>{dish.name}</p>
+                </div>
+              }
+            />
             <div>{dish.price}₽</div>
           </List.Item>
         )}
