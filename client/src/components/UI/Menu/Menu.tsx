@@ -11,7 +11,12 @@ interface IMenuProps {
 export const Menu: FC<IMenuProps> = ({ menu }) => {
   return (
     <List>
-      <VirtualList data={menu} height={400} itemHeight={47} itemKey="scroll">
+      <VirtualList
+        data={menu}
+        height={menu.length > 0 ? menu.length * 15 : 800}
+        itemHeight={47}
+        itemKey="scroll"
+      >
         {(dish: IDish) => (
           <List.Item key={dish.id}>
             <List.Item.Meta

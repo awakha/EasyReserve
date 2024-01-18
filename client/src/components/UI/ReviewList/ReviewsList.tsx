@@ -14,7 +14,12 @@ export const ReviewsList: FC<IReviewsListProps> = ({ reviews }) => {
   const user = useAppSelector((state) => state.auth.user);
   return (
     <List>
-      <VirtualList data={reviews} height={500} itemHeight={47} itemKey="scroll">
+      <VirtualList
+        data={reviews}
+        height={reviews.length * 20}
+        itemHeight={47}
+        itemKey="scroll"
+      >
         {(review: IReview) => (
           <List.Item key={review.id} className={styles.comment}>
             <List.Item.Meta
