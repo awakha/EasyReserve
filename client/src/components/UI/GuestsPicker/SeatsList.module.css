@@ -1,9 +1,10 @@
 .seats {
-  width: auto;
+  width: 220px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  gap: 2px;
 }
 
 .options {
@@ -11,5 +12,6 @@
 }
 
 .options_bts {
-  width: 150px;
+  width: auto;
+  margin: 10px;
 }

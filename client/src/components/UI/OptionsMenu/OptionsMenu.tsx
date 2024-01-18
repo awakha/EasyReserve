@@ -39,7 +39,6 @@ export const OptionsMenu: FC<IOptionMenuProps> = ({
     }
   };
 
-  //style={{ visibility: param.status ? 'visible' : 'hidden' }}
   return (
     <section style={{ visibility: param.status ? 'visible' : 'hidden' }}>
       <div className={styles.btn_group}>
