@@ -23,7 +23,7 @@ module.exports = {
       },
       images: {
         type: Sequelize.ARRAY(Sequelize.TEXT),
-        defaultValue: [],
+        defaultValue: ['https://media.timeout.com/images/106047598/image.jpg'],
       },
       cuisineId: {
         type: Sequelize.INTEGER,
