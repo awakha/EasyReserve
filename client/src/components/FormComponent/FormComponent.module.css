@@ -21,7 +21,7 @@ textarea {
 }
 
 input[type="submit"] {
-  background-color: #b409e7;
+  background-color: #4b4a4b;
   color: white;
   cursor: pointer;
   width: 100px;
@@ -29,7 +29,7 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-  background-color: #45a049;
+  background-color: #725594;
 }
 
 .messageContainer {

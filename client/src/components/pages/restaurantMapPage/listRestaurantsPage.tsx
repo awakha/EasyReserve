@@ -36,7 +36,7 @@ export default function RestaurantMapPage() {
           <h2 className={style.search_title}>Найди свой ресторан</h2>
           <SearchBar
             setRestaurant={setRestaurant}
-            className={style.SearchBar}
+            className={style.searchBar}
           />
         </div>
       </div>

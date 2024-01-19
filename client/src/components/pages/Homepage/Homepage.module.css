@@ -44,8 +44,27 @@
   padding: 20px;
   border: 2px solid #000;
   border-radius: 10px;
-  margin: 20px
+  margin: 20px;
+  width: 50%;
+  margin-left: 450px;
+  background-color: rgb(63, 61, 61); /* Add background color */
+  align-content: center;
 }
+
+.bordered_container p {
+  color: white; /* Set text color to white */
+  font-size: 18px; /* Increase font size */
+}
+
+.bordered_container a {
+  color: white; /* Set link text color to white */
+  font-size: 24px; /* Increase link font size */
+  text-decoration: none; /* Remove underline */
+}
+
+.bordered_container a:hover {
+  color: rgb(155, 155, 247);
+} 
 
 .tg_link {
   text-align: center;
@@ -53,12 +72,12 @@
 }
 
 .bright_link {
-  color: purple;
+  color: black;
   font-weight: bold;
   text-transform: uppercase;
   transition: color 0.3s ease, background-color 0.3s ease;
 }
 
 .bright_link:hover {
-  color: #00ff00;
+  color: rgb(161, 161, 247);
 }

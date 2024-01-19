@@ -37,7 +37,7 @@ export const Homepage: FC = () => {
     <CustomLayout>
       <MainWords />
       <div className={styles.bordered_container}>
-        <p>
+        <p className={styles.title}>
           Если хочешь посетить любимый ресторан в ближайшие 3 дня можешь
           воспользоваться нашим ботом помощником
         </p>

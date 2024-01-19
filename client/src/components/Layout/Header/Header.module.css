@@ -30,3 +30,21 @@
   width: 100%;
   z-index: 999;
 }
+
+.link_group {
+  display: flex;
+  gap: 30px;
+}
+
+.brand_name {
+  font-size: 20px; 
+  font-weight: bold; 
+  font-family: 'Your Font Name', sans-serif;
+}
+
+.header {
+  border-bottom: 2px solid gray; /* Add a bottom border to the header */
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Your+Font+Name&display=swap');
