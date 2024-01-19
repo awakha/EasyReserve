@@ -7,7 +7,7 @@ const { log } = require('console');
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     //full path to public folder on client
-    const uploadFolder = '';
+    const uploadFolder = '/Users/yanutstas/Desktop/Elbrus/EasyReserve/client/public';
     cb(null, uploadFolder);
   },
   filename: function (req, file, cb) {

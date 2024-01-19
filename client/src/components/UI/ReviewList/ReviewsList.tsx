@@ -16,7 +16,8 @@ export const ReviewsList: FC<IReviewsListProps> = ({ reviews }) => {
     <List>
       <VirtualList
         data={reviews}
-        height={reviews.length * 20}
+        // height={reviews.length * 20}
+        height={400}
         itemHeight={47}
         itemKey="scroll"
       >

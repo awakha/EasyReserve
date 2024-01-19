@@ -13,7 +13,8 @@ export const Menu: FC<IMenuProps> = ({ menu }) => {
     <List>
       <VirtualList
         data={menu}
-        height={menu.length > 0 ? menu.length * 15 : 800}
+        // height={menu.length > 0 ? menu.length * 15 : 800}
+        height={400}
         itemHeight={47}
         itemKey="scroll"
       >

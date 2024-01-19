@@ -14,8 +14,8 @@
 
 .rests_container {
   display: flex;
-  gap: 30px;
-  justify-content: flex-start; 
+  gap: 50px;
+  justify-content: space-between; 
 }
 
 
