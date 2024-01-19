@@ -25,8 +25,6 @@ export const RestPage: FC = () => {
   const [reviewsArr, setReviewsArr] = useState<IReview[]>([]);
   const user = useAppSelector((state) => state.auth.user);
 
-  console.log(reviewsArr);
-
   const fetchData = async () => {
     try {
       const response = await client.get(`/restaurants/${id}`);
@@ -100,7 +98,7 @@ export const RestPage: FC = () => {
             </div>
 
             <p className={styles.menu_group}>Меню</p>
-            {rest?.Dishes ? (
+            {rest?.Dishes.length > 0 ? (
               <Menu menu={rest?.Dishes} />
             ) : (
               <span>Нет меню</span>
@@ -108,7 +106,7 @@ export const RestPage: FC = () => {
 
             <p className={styles.menu_group}>Отзывы</p>
             <div id="reviews">
-              {reviewsArr ? (
+              {reviewsArr.length > 0 ? (
                 <ReviewsList reviews={reviewsArr} />
               ) : (
                 <span>Отзывов пока нет</span>

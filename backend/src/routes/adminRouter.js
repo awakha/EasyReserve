@@ -2,15 +2,17 @@ const router = require('express').Router();
 const multer = require('multer');
 const path = require('path');
 const { Restaurant, City, Timetable, Cuisine } = require('../../db/models');
+const { log } = require('console');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    const uploadFolder = path.join(process.cwd(), 'src/uploads');
+    //full path to public folder on client
+    const uploadFolder = '';
     cb(null, uploadFolder);
   },
   filename: function (req, file, cb) {
-    const ext = path.extname(file.originalname);
-    cb(null, Date.now() + ext);
+    const ext = file.originalname;
+    cb(null, ext);
   },
 });
 
@@ -28,8 +30,8 @@ router.get('/', async (req, res) => {
 
 router.post('/', upload.array('images', 5), async (req, res) => {
   try {
-    const images = req.files.map((file) => file.path);
-    const rest = await Restaurant.create({ ...req.body });
+    const images = req.files.map((file) => file.originalname);
+    const rest = await Restaurant.create({ ...req.body, images });
     const restData = rest.get();
     res.json(restData);
   } catch (err) {
