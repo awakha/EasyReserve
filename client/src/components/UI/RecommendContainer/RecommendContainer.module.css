@@ -1,0 +1,25 @@
+.recommend_container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.recommend_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 20px;
+  margin-bottom: 10px; 
+}
+
+.rests_container {
+  display: flex;
+  gap: 50px;
+  justify-content: space-between; 
+}
+
+
+.RestaurantItem {
+  width: 400px; 
+  height: 250px; 
+}

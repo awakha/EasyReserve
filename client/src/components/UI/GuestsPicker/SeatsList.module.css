@@ -1,0 +1,17 @@
+.seats {
+  width: 220px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2px;
+}
+
+.options {
+  align-self: center;
+}
+
+.options_bts {
+  width: auto;
+  margin: 10px;
+}

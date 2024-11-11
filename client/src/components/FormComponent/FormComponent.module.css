@@ -1,0 +1,53 @@
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 900px;
+  margin: 0 auto; 
+  padding: 20px;
+  border-radius: 10px;
+}
+
+label {
+  margin-bottom: 8px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+input[type="submit"] {
+  background-color: #4b4a4b;
+  color: white;
+  cursor: pointer;
+  width: 100px;
+  border-radius: 5px;
+}
+
+input[type="submit"]:hover {
+  background-color: #725594;
+}
+
+.messageContainer {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.messageContainer p {
+  margin-bottom: 8px;
+}
+
+.messageContainer button {
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+}
+
+.messageContainer button:hover {
+  background-color: #45a049;
+}
+

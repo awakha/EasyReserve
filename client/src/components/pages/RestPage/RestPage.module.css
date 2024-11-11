@@ -1,0 +1,81 @@
+.carousel {
+  margin: 50px 0px;
+}
+
+.main {
+  display: flex;
+}
+
+.info {
+  padding: 20px;
+  height: auto;
+  border: 2px solid black;
+  border-radius: 20px;
+  width: 65%;
+  padding-bottom: 50px;
+}
+
+.cuisine {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.info_cards {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+h1 {
+  margin: 15px 0px;
+  font-size: 35px;
+}
+
+.main_info > p,
+.additional_info > p {
+  margin: 10px 0px;
+  display: flex;
+  gap: 10px;
+  font-size: 15px;
+}
+
+.additional_info > span:first-child {
+  font-size: 25px;
+}
+
+.menu_group {
+  font-size: 25px;
+  margin: 30px 0px;
+}
+
+.description {
+  font-size: 15px;
+  margin: 20px 10px;
+  text-align: center;
+}
+
+.calendar {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  position: sticky;
+  align-self: self-start;
+  top: 15px;
+}
+
+.calendar > p {
+  font-size: 20px;
+  margin-top: 15px;
+}
+
+.main {
+  display: flex;
+  padding: 10px;
+}
+
+.calendar {
+  margin-left: 40px;
+}
+

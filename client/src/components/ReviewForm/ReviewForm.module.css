@@ -1,0 +1,26 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.add_btn {
+  align-self: flex-end;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stars {
+  display: flex;
+  align-self: flex-end;
+}
+
+.icon {
+  margin-right: 10;
+  cursor: pointer;
+}
